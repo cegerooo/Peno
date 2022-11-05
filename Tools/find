@@ -1,0 +1,4 @@
+find "password" C:\Users\Offsec\importantfile.txt
+type importantfile.txt |find "password"
+dir | find "important"
+

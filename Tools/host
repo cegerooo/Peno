@@ -1,0 +1,4 @@
+host -t mx megacorpone.com
+host -t txt megacorpone.com
+host www.megacorpone.com
+

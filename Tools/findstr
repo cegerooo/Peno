@@ -1,0 +1,2 @@
+findstr "Johnny password" importantfile.txt
+findstr /si password

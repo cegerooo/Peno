@@ -1,0 +1,4 @@
+sc start WSearch
+sc stop WSearch
+sc query dhcp
+sc config WSearch start=auto

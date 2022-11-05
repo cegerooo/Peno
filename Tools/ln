@@ -1,0 +1,3 @@
+ln -s ~/original.txt symlink.txt
+ln ~/offsec123.txt hardlink.txt
+

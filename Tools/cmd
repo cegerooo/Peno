@@ -1,0 +1,2 @@
+forfiles /P C:\Windows /S /M notepad.exe /c "cmd /c echo @PATH"          //Using forfiles to find the path of notepad.exe
+

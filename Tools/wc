@@ -1,0 +1,3 @@
+wc -m < test.txt
+ls -l | wc -l
+

@@ -1,0 +1,1 @@
+sudo foremost -v -q -t pdf -i /dev/sda1 -o ./Recovery

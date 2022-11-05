@@ -1,0 +1,3 @@
+dir /s trojan.txt			//Location files using dir
+dir /s *.exe /p				//Location files using dir
+dir /r					//Using dir /r to view alternate data streams  (echo fileTwo uses the 'offsec' stream > offsecStream.txt:offsec)

@@ -1,0 +1,2 @@
+./evil-winrm.rb -i 192.168.50.80 -u offensive -p security
+

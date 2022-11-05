@@ -1,0 +1,2 @@
+mklink softlink fileToBeLinkedTo.txt				//Soflink creation windows
+mklink /h hardlink secondFile.txt				//Hardlink creation windows

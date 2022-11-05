@@ -1,0 +1,6 @@
+tasklist
+tasklist /svc
+tasklist /fi "USERNAME eq NT AUTHORITY\SYSTEM" /fi "STATUS eq running"			//Using tasklist to view SYSTEM's running processes
+tasklist /fi "imagename eq cmd.exe"							//Using tasklist and find to filter for cmd.exe
+
+

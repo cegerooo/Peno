@@ -1,0 +1,10 @@
+net user /add Tristan greatpassword
+net localgroup
+net localgroup Administrators Tristan /add
+net localgroup Administrators Tristan /del
+net accounts
+net use \\192.168.1.1\public
+net share /?
+net stop WSearch
+net start WSearch
+

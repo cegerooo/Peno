@@ -1,0 +1,2 @@
+echo "hello::there::friend" | awk -F "::" '{print $1, $3}'
+

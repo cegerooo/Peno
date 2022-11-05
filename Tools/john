@@ -1,0 +1,1 @@
+/usr/sbin/john -wordlist=rockyou.txt ntlm.hash --format=NT
