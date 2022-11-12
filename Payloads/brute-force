@@ -1,0 +1,12 @@
+
+
+//Broken brute-force protection, multiple credentials per request
+POST Request
+
+{"username":"carlos","password":["fff",
+"123456",
+"password",
+"12345678",
+"qwerty"]
+
+

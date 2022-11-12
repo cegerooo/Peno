@@ -1,4 +1,4 @@
 ssh-keygen
 ssh-copy-id -i /home/kali/.ssh/id_rsa.pub kali@localhost
 ssh -i .ssh/id_rsa kali@localhost
-
+ssh <username>@<IPaddress> -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
