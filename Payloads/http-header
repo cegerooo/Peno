@@ -8,3 +8,6 @@ X-Forwarded-Host:exploit-0a4e00d203b9f2e8c07008dd010c00dd.exploit-server.net
 
 username=carlos
 
+//CORS
+Origin: https://example.com
+

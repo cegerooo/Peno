@@ -1,0 +1,20 @@
+//README
+// Change user to admin with the same signature(JWT authentication bypass via unverified signature)
+// Change alg parameter to none(JWT authentication bypass via flawed signature verification)
+// Crack the secret and rebuild the cookie (JWT authentication bypass via weak signing key)
+	hashcat -a 0 -m 16500 <YOUR-JWT> /path/to/jwt.secrets.list
+//JWT Editor generate key and then embed a JWK via  JWT Attack to the header(JWT authentication bypass via jwk header injection)
+//JWT authentication bypass via jku header injection:
+			- Generate RSA JWT and add it to Exploit Server: 
+				{
+   			 "keys": [
+					//Here
+   				 ]
+				}	
+			- add jku param to the header: "jku": "https://exploit-0abb008004f147dbc0ca32a801f800ca.exploit-server.net/exploit"
+			- change the kid header and sign the JWT
+
+//JWT authentication bypass via kid header path traversal
+			- Generate JWT Assemteric key with k="AA==" /null Byte in base64
+			- In JWT Cookie change the kid value to ../../../../../../../dev/null
+ 			- Sign and send

