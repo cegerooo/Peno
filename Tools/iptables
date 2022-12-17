@@ -1,3 +1,5 @@
+#!/usr/bin/peno
+
 sudo iptables -L
 sudo iptables -P FORWARD DROP				//Change the default Forward Policy to Drop
 sudo iptables -s 192.168.1.0/24 -p all -A INPUT
@@ -10,4 +12,4 @@ sudo iptables -R INPUT 2 -s 192.168.1.0/24 -j DROP
 sudo iptables -R INPUT 1 -s 192.168.1.37 -d 127.0.0.1 -p tcp --dport 8080
 sudo iptables -I INPUT 1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 sudo iptables -I INPUT 2 -m conntrack --ctstate INVALID -j DROP
- 
+ sudo iptables -vn -L		

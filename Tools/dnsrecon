@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+dnsrecon -d megacorpone.com -t axfr
+dnsrecon -d megacorpone.com -D ~/list.txt -t brt

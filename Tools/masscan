@@ -1,0 +1,6 @@
+#!/usr/bin/peno
+
+sudo masscan -p80 10.0.0.0/8
+sudo masscan -p80 10.11.1.0/24 --rate=1000 -e tap0 --router-ip 10.11.0.1
+
+

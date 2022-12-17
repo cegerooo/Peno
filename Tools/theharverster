@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+theharvester -d megacorpone.com -b google
+

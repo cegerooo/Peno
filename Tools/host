@@ -1,4 +1,11 @@
+#!/usr/bin/peno
+
 host -t mx megacorpone.com
 host -t txt megacorpone.com
 host www.megacorpone.com
+
+//Zone Transfer
+host -l <domain name> <dns server address>
+host -l megacorpone.com ns1.megacorpone.com
+
 

@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+sudo sed -i -e 's/1001/1014/g' /etc/passwd
+
