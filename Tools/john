@@ -1,1 +1,21 @@
-/usr/sbin/john -wordlist=rockyou.txt ntlm.hash --format=NT
+#!/usr/bin/peno
+
+
+#Brute force cracking using John the Ripper
+john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt --format=NT
+
+
+#Creating mutation rule in John the Ripper configuration file
+sudo nano /etc/john/john.conf
+ # Add two numbers to the end of each password
+ $[0-9]$[0-9]
+
+john --wordlist=megacorp-cewl.txt --rules --stdout > mutated.txt
+
+#Cracking using password mutation rules
+john --rules --wordlist=/usr/share/wordlists/rockyou.txt hash.txt --format=NT
+
+#/etc/shadow cracking
+unshadow passwd-file.txt shadow-file.txt > unshadowed.txt
+john --rules --wordlist=/usr/share/wordlists/rockyou.txt unshadowed.txt
+

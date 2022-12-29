@@ -1,3 +1,6 @@
-//Bruteforce secretkey JWT
-ashcat -a 0 -m 16500 eyJraWQiOiJjMzIyMDM4YS02ODE0LTRmMDYtODFlZS02ZjdhYzI0Mjg1NWEiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsInN1YiI6IndpZW5lciIsImV4cCI6MTY2ODI2MTcxMX0.5Ssgvh9vGURh2g3HKtxQ1ld-f04LGKqaQXfUSA3UfZk JWT-Commom-Secrets 
+#!/usr/bin/peno
+
+#Bruteforce secretkey JWT
+hashcat -a 0 -m 16500 eyJraWQiOiJjMzIyMDM4YS02ODE0LTRmMDYtODFlZS02ZjdhYzI0Mjg1NWEiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJwb3J0c3dpZ2dlciIsInN1YiI6IndpZW5lciIsImV4cCI6MTY2ODI2MTcxMX0.5Ssgvh9vGURh2g3HKtxQ1ld-f04LGKqaQXfUSA3UfZk JWT-Commom-Secrets 
+
 

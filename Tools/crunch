@@ -1,0 +1,12 @@
+#!/usr/bin/peno
+
+
+crunch 8 8 -t ,@@^^%%%
+#@	Lower case alpha characters
+#,	Upper case alpha characters
+#%	Numeric characters
+#^	Special characters including space
+
+crunch 4 6 0123456789ABCDEF -o crunch.txt
+#Generating password list of lower and upper case letters
+crunch 4 6 -f /usr/share/crunch/charset.lst mixalpha -o crunch.txt

