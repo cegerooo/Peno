@@ -7,7 +7,7 @@ john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt --format=NT
 
 #Creating mutation rule in John the Ripper configuration file
 sudo nano /etc/john/john.conf
- # Add two numbers to the end of each password
+ # Add two numbers to the end of each password ([List.Rules:Wordlist])
  $[0-9]$[0-9]
 
 john --wordlist=megacorp-cewl.txt --rules --stdout > mutated.txt
