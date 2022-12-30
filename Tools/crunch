@@ -10,3 +10,5 @@ crunch 8 8 -t ,@@^^%%%
 crunch 4 6 0123456789ABCDEF -o crunch.txt
 #Generating password list of lower and upper case letters
 crunch 4 6 -f /usr/share/crunch/charset.lst mixalpha -o crunch.txt
+
+crunch 11 11  -f /usr/share/crunch/charset.lst lalpha -t  buddy%%%%^^ -o buddy.txt
