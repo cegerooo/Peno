@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+#-r to scan non-recursively, and -z 10 to add a 10 millisecond delay to each request
+dirb http://www.megacorpone.com -r -z 10

