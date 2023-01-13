@@ -60,5 +60,6 @@ Get-Command -Module Defender
 Get-Help Start-MpScan
 Start-MpScan -ScanPath 'C:\\Users\\User\\' -ScanType QuickScan
 
-
+#Using powershell to spawn a cmd.exe process with high integrity
+powershell.exe Start-Process cmd.exe -Verb runAs
 

