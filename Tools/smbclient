@@ -1,0 +1,10 @@
+#!/usr/bin/peno
+
+#Updating SAMBA from SMBv1 to SMBv2 communications
+cat /etc/samba/smb.conf
+addd --> min protocol = SMB2
+sudo /etc/init.d/smbd restart
+
+#Listing net shares on the Windows Server 2016 machine through local port forwarding
+smbclient -L 127.0.0.1 -U Administrator
+smbclient -L 10.11.0.22 --port=4455 --user=Administrator

@@ -1,0 +1,14 @@
+#!/usr/bin/peno
+
+#Installing HTTPTunnel from the Kali Linux repositories
+apt-cache search httptunnel
+sudo apt install httptunnel
+
+#orwarding TCP port 8888 on our compromised Linux machine to TCP port 3389 on the Windows Server 2016 system
+#Setting up the server component of HTTPTunnel
+ssh -L 0.0.0.0:8888:192.168.1.110:3389 student@127.0.0.1
+hts --forward-port localhost:8888 1234
+
+#etting up the client component of HTTPTunnel
+htc --forward-port 8080 10.11.0.128:1234
+

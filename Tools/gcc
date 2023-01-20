@@ -1,0 +1,5 @@
+#!/usr/bin/peno
+
+
+#
+sudo apt-get install gcc-multilib

@@ -1,0 +1,7 @@
+#!/usr/bin/peno
+
+#Installing shellter in Kali Linux
+apt-cache search shellter
+sudo apt install shellter
+
+

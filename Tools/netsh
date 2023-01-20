@@ -1,3 +1,5 @@
+#!/usr/bin/peno
+
 netsh advfirewall show allprofiles
 netsh advfirewall firewall add rule ?
 netsh advfirewall firewall add rule name="Deny Ping OffSec" dir=in action=block protocol=icmpv4 remoteip=192.124.249.5
@@ -5,4 +7,19 @@ netsh advfirewall firewall show rule name="Deny Ping OffSec"
 netsh advfirewall firewall delete rule name="Deny Ping OffSec"
 netsh advfirewall firewall add rule name="Block OffSec" remoteip=192.124.249.5 dir=out enable=yes action=block
 netsh advfirewall firewall add rule name="Block OffSec" remoteip=192.124.249.5 dir=out enable=yes action=block remoteport=443 protocol=tcp
+
+
+#Local port forwarding using netsh
+netsh interface portproxy add v4tov4 listenport=4455 listenaddress=10.11.0.22 connectport=445 connectaddress=192.168.1.110
+
+#Using netsh to allow inbound traffic on TCP port 4455
+netsh advfirewall firewall add rule name="forward_port_rule" protocol=TCP dir=in localip=10.11.0.22 localport=4455 action=allow
+
+#Mounting the remote share available on the Windows 2016 Server machine through a port forward
+sudo mount -t cifs -o port=4455 //10.11.0.22/Data -o username=Administrator,password=Qwerty09! /mnt/win10_share
+ls -l /mnt/win10_share/
+
+
+#Listing network shares on the Windows Server 2016 machine through local port forwarding using NETSH
+smbclient -L 10.11.0.22 --port=4455 --user=Administrator
 

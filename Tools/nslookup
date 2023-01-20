@@ -1,0 +1,26 @@
+#!/usr/bin/peno
+
+#nslookup to discover hostname
+C:\Windows\system32>nslookup
+nslookup
+DNS request timed out.
+    timeout was 2 seconds.
+Default Server:  UnKnown
+Address:  10.5.5.30
+
+> set type=all
+> _ldap._tcp.dc._msdcs.sandbox.local
+Server:  UnKnown
+Address:  10.5.5.30
+
+_ldap._tcp.dc._msdcs.sandbox.local      SRV service location:
+          priority       = 0
+          weight         = 100
+          port           = 389
+          svr hostname   = SANDBOXDC.sandbox.local
+SANDBOXDC.sandbox.local internet address = 10.5.5.30
+> exit
+
+C:\Windows\system32>
+
+

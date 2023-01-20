@@ -19,3 +19,7 @@ john --rules --wordlist=/usr/share/wordlists/rockyou.txt hash.txt --format=NT
 unshadow passwd-file.txt shadow-file.txt > unshadowed.txt
 john --rules --wordlist=/usr/share/wordlists/rockyou.txt unshadowed.txt
 
+#WP User pass cracking
+echo '$P$BfBIi66MsPQgzmvYsUzwjc5vSx9L6i/' > pass.txt
+john --wordlist=/usr/share/wordlists/rockyou.txt pass.txt
+

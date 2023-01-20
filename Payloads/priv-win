@@ -45,6 +45,11 @@ wmic qfe get Caption, Description, HotFixID, InstalledOn
 
 #Listing all installed applications installed on Windows
 wmic product get name, version, vendor
+wmic service get name,displayname,pathname,startmode
+wmic service get name,displayname,pathname,startmode | findstr /i "auto"
+
+#Getting services via wmic that are automatically started and non-standard
+wmic service get name,displayname,pathname,startmode |findstr /i "auto" |findstr /i /v "c:\windows"
 
 #Listing running services on Windows using PowerShell
 Get-WmiObject win32_service | Select-Object Name, State, PathName | Where-Object {$_.State -like 'Running'}
@@ -72,6 +77,11 @@ ipconfig /all
 
 #Getting a list of running processes on the operating system and matching services
 tasklist /SVC
+
+#Checking user permissions
+whoami /priv
+Output: SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
+
 
 #Tools
 #https://github.com/pentestmonkey/windows-privesc-check
@@ -104,5 +114,9 @@ int main ()
   
   return 0;
 }
+
+#Code
+#Ping sweep internal network
+for /L %i in (1,1,255) do @ping -n 1 -w 200 10.5.5.%i > nul && echo 10.5.5.%i is up.
 
 

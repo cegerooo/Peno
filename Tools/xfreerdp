@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+#Connecting to the host with xfreerdp
+xfreerdp /d:sandbox /u:alex /v:10.5.5.20 +clipboard

