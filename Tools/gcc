@@ -1,5 +1,13 @@
 #!/usr/bin/peno
 
-
-#
+#Compiling
 sudo apt-get install gcc-multilib
+apt-get install mingw-w64 -y
+dpkg --add-architecture i386
+apt-get update
+gcc shell.c -o shell
+
+#Checking the architecture
+dpkg --print-architecture
+dpkg --print-foreign-architectures
+

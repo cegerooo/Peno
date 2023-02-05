@@ -1,0 +1,6 @@
+#!/usr/bin/peno
+
+#Directory Search
+gobuster dir -u https://10.11.1.237/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt  -k
+
+

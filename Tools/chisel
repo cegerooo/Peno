@@ -1,0 +1,12 @@
+#!/usr/bin/peno
+#https://infinitelogins.com/2020/12/11/tunneling-through-windows-machines-with-chisel/
+#https://github.com/jpillora/chisel/releases/tag/v1.7.3
+
+
+#create Server for remote Forwarding
+chisel server --reverse --port 9002
+
+#Connect with client for Remote Forwarding
+chisel.exe client 192.168.119.125:9002 192.168.119.125:445 R:445:localhost:445 
+
+

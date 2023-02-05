@@ -5,6 +5,9 @@ cat /etc/issue
 cat /etc/*-release
 uname -a
 
+#Enumerate IP-Adresses
+cat /etc/sysconfig/network-scripts/ifcfg-eth0 | grep IP
+
 #Getting a list of running processes on Linux
 ps axu
 

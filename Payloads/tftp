@@ -1,0 +1,14 @@
+#!/usr/bin/peno
+
+#nmap scan
+nmap -n -Pn -sU -p69 -sV --script tftp-enum <IP>
+
+#msfconsole - Download-Upload
+msf5> auxiliary/admin/tftp/tftp_transfer_util
+
+#python - Download-Upload
+import tftpy
+client = tftpy.TftpClient(<ip>, <port>)
+client.download("filename in server", "/tmp/filename", timeout=5)
+client.upload("filename to upload", "/local/path/file", timeout=5)
+
