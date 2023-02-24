@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+#Extract data from JPG
+steghide --extract -sf trytofind.jpg

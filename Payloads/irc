@@ -1,0 +1,17 @@
+#!/usr/bin/peno
+
+#Connection with random nickname
+user kali 0 * kali
+nick kali
+
+#list channels/Users
+list
+
+#join channel
+join #channelname
+
+#posting a message into the channel
+privmsg #channel-name hello
+
+#posting a message to user
+privmsg user hello

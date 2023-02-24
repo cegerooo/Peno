@@ -10,3 +10,6 @@ chisel server --reverse --port 9002
 chisel.exe client 192.168.119.125:9002 192.168.119.125:445 R:445:localhost:445 
 
 
+#port forwarding
+./chisel server -p 8083 --reverse
+./chisel client 192.168.1.99:8083 R:6379:127.0.0.1:6379

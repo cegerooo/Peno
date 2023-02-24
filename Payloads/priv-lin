@@ -20,8 +20,20 @@ ip a
 #Printing the routes on Linux
 /sbin/route
 
+#checking the writable permissions on /etc/apt/apt.conf.d
+ls -ld /etc/apt/apt.conf.d
+
+
 #Listing all active network connections on Linux
 ss -anp
+
+
+#Writable Directory
+find / -type d \( -perm -g+w -or -perm -o+w \) -exec ls -adl {} \; 2>/dev/null
+
+
+#discovering that this user can write to usr/local/bin.
+find / -writable -type d -prune -o -name /home/chloe -prune -o -name /var/lib/gitea 2>/dev/null
 
 # Listing all cron jobs on Linux
 ls -lah /etc/cron*
@@ -33,6 +45,8 @@ dpkg -l
 #Listing all world writable directories on Linux
 find / -writable -type d 2>/dev/null
 
+#Caps
+getcap -r / 2>/dev/null
 #Listing content of /etc/fstab and all mounted drives on Linux
 cat /etc/fstab
 mount
@@ -61,3 +75,8 @@ su root2 --> Root
 #Code-GCC Compile
 gcc 43418.c -o exploit
 
+#Process monitoring
+https://github.com/DominicBreuker/pspy/releases
+
+#Dumping Firefox Saved Passwords
+find / -type f -user elliot 2>/dev/null | grep -v "/proc/" | grep -v "/sys/"

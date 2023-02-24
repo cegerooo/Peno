@@ -23,3 +23,8 @@ john --rules --wordlist=/usr/share/wordlists/rockyou.txt unshadowed.txt
 echo '$P$BfBIi66MsPQgzmvYsUzwjc5vSx9L6i/' > pass.txt
 john --wordlist=/usr/share/wordlists/rockyou.txt pass.txt
 
+#Transforming the key file to a format usable by John the Ripper
+gpg2john creds.priv > creds4john
+
+# bruteforce the jwt secret key
+john jwt.txt --wordlist=rockyou.txt
