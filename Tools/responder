@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+#running responder on our active network interface.
+sudo responder -I tap0

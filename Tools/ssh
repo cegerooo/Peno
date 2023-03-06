@@ -34,6 +34,11 @@ socks4 	127.0.0.1 8080
 # Using nmap to scan a machine through a dynamic tunnel 
 sudo proxychains nmap --top-ports=20 -sT -Pn 192.168.1.110
 
+
+#Only Windows-Dynamic PORT Forwarding only with R and the Port 
+ssh -R 1088 kali@ip --> SSH 
+
+
 #Generating SSH keys
 mkdir keys
 cd keys

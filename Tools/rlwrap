@@ -1,0 +1,5 @@
+#!/usr/bin/peno
+
+
+#rlwrap with nc
+rlwrap -cAr nc -lvnp 443

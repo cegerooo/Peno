@@ -20,3 +20,8 @@ sudo tcpdump -nX -r password_cracking_filtered.pcap
 echo "$((2#00011000))" --> 24
 
 sudo tcpdump -A -n 'tcp[13] = 24' -r password_cracking_filtered.pcap
+
+#sniffing with tcpdump
+# -A     Print each packet (minus its link level header) in ASCII.  Handy for capturing web pages.
+
+tcpdump -i lo -A

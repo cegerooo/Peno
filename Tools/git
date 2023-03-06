@@ -1,0 +1,32 @@
+#!/usr/bin/peno
+
+#Check Git version
+git --version
+
+#Using the help command
+git help
+git help git
+git help commit
+git help init
+git help config
+
+#Running the init command
+git init
+
+#Add user settings to local config file
+git config --local user.email "hacker@git.com"
+git config --local user.name "Leet Hacker"
+
+#Confirm user config settings
+cat config
+git config --list
+
+#showing logs
+git log
+git log --pretty=oneline
+git log --stat
+git log -p -1
+
+#git diff
+git diff 4e5a690fb542e77598c46c7d58f614238fd35a5c 8ad4afea2376ca2eeb9ffb3ff293c5456e3708c9
+

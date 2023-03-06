@@ -2,7 +2,10 @@
 
 #standard dirsearch
 ffuf  -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://10.11.1.229/FUZZ -mc 200 
+ffuf -k -c -w /usr/share/seclists/Discovery/Web-Content/raft-small-words.txt -u "http://flower.pg/FUZZ" 
 
 #FUZZ url parameter
 ffuf -c -r -u 'http://192.168.124.212/secret/evil.php?FUZZ=/etc/passwd' -w /usr/share/seclists/Discovery/Web-Content/common.txt -fs 0
 
+#Fuzzing subdomains
+ffuf -k -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-20000.txt -u "http://flower.pg/" -H "Host: FUZZ.flower.pg" -fw 105

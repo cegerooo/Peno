@@ -47,6 +47,7 @@ find / -writable -type d 2>/dev/null
 
 #Caps
 getcap -r / 2>/dev/null
+
 #Listing content of /etc/fstab and all mounted drives on Linux
 cat /etc/fstab
 mount
@@ -62,6 +63,7 @@ lsmod
 
 # Searching for SUID files on Linux
 find / -perm -u=s -type f 2>/dev/null
+find / -type f -perm -4200 2>/dev/null
 
 #Tools
 #https://pentestmonkey.net/tools/audit/unix-privesc-check
