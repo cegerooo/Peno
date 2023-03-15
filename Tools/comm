@@ -1,1 +1,4 @@
+#!/usr/bin/peno
+
+#Using comm to compare files
 comm scan-a.txt scan-b.txt

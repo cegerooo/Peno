@@ -1,1 +1,7 @@
+#!/usr/bin/peno
+
+#Using diff to compare files
 diff -c scan-a.txt scan-b.txt
+
+#Using vimdiff to compare files
+vimdiff scan-a.txt scan-b.txt

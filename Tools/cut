@@ -1,2 +1,4 @@
+#!/usr/bin/peno
+
 cut -d ":" -f 1 /etc/passwd
 echo "I hack binaries,web apps,mobile apps and just about anything else" | cut -f 2 -d ","

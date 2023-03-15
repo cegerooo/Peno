@@ -1,0 +1,10 @@
+#!/usr/bin/peno
+
+#Installing and importing PowerView
+Import-Module .\PowerView.ps1
+
+#User enumeration using Get-NetLoggedon
+Get-NetLoggedon -ComputerName client251
+
+#Enumerating active user sessions with Get-NetSession
+Get-NetSession -ComputerName dc01

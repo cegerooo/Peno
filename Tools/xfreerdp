@@ -2,3 +2,6 @@
 
 #Connecting to the host with xfreerdp
 xfreerdp /d:sandbox /u:alex /v:10.5.5.20 +clipboard
+
+#Connecting and sharing folder
+xfreerdp /d:sandbox /u:alex /v:10.5.5.20 /drive:/root/oscp/temp /dynamic-resolution  +clipboard

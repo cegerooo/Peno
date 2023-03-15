@@ -1,7 +1,13 @@
 #!/usr/bin/peno
 
+#Show the Rules
 sudo iptables -L
-sudo iptables -P FORWARD DROP				//Change the default Forward Policy to Drop
+sudo iptables -vn -L
+
+#Change the default Forward Policy to Drop
+sudo iptables -P FORWARD DROP				
+
+#Others
 sudo iptables -s 192.168.1.0/24 -p all -A INPUT
 sudo iptables -s 127.0.0.1 -d 127.0.0.1 -A INPUT
 sudo iptables -s 192.168.1.37 -p tcp -A INPUT
@@ -12,4 +18,10 @@ sudo iptables -R INPUT 2 -s 192.168.1.0/24 -j DROP
 sudo iptables -R INPUT 1 -s 192.168.1.37 -d 127.0.0.1 -p tcp --dport 8080
 sudo iptables -I INPUT 1 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 sudo iptables -I INPUT 2 -m conntrack --ctstate INVALID -j DROP
- sudo iptables -vn -L		
+sudo iptables -vn -L		
+
+
+#Configuring our iptables rules for nmap scan
+sudo iptables -I INPUT 1 -s 10.11.1.220 -j ACCEPT
+sudo iptables -I OUTPUT 1 -d 10.11.1.220 -j ACCEPT
+sudo iptables -Z

@@ -1,0 +1,14 @@
+#!/usr/bin/peno
+
+#Using nmap to scan for the NetBIOS service
+nmap -v -p 139,445 -oG smb.txt 10.11.1.1-254
+
+#Using nbtscan to collect additional NetBIOS information
+sudo nbtscan -r 10.11.1.0/24
+
+#Using the nmap scripting engine to perform OS discovery
+nmap -v -p 139, 445 --script=smb-os-discovery 10.11.1.227
+
+#Determining whether a host is vulnerable to the MS08_067 vulnerability
+nmap -v -p 139,445 --script=smb-vuln-ms08-067 --script-args=unsafe=1 10.11.1.5
+

@@ -1,9 +1,11 @@
 #!/usr/bin/peno
 
-//TCP port scan
-//The -w option specifies the connection timeout in seconds and -z is used to specify zero-I/O mode, which will send no data and is used for scanning
+#TCP port scan
+#The -w option specifies the connection timeout in seconds and -z is used to specify zero-I/O mode, which will send no data and is used for scanning
 nc -nvv -w 1 -z 10.11.1.220 3388-3390
-//UDP port scan
+
+#Using Netcat to perform a UDP port scan
 nc -nv -u -z -w 1 10.11.1.115 160-162
+
 
 

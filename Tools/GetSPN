@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+#Getting service names
+Get-NetUser -SPN | select serviceprincipalname

@@ -1,4 +1,5 @@
 #!/usr/bin/peno
 
+#Updating the UUID in the /etc/passwd file
 sudo sed -i -e 's/1001/1014/g' /etc/passwd
 

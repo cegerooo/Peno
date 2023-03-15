@@ -1,0 +1,15 @@
+#!/usr/bin/peno
+
+
+#Using apt-cache search to search for the pure-ftpd application
+apt-cache search pure-ftpd
+
+#Using apt show to examine information related to the resource-agents package
+apt show resource-agents
+
+# Using apt to remove a package 
+apt remove --purge pure-ftpd
+
+#Using dpkg -i to install the man-db application
+sudo dpkg -i man-db_2.7.0.2-5_amd64.deb
+

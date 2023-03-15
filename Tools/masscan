@@ -1,6 +1,9 @@
 #!/usr/bin/peno
 
+#Using masscan to look for all web servers within a class A subnet
 sudo masscan -p80 10.0.0.0/8
+
+#Using masscan with more advanced options
 sudo masscan -p80 10.11.1.0/24 --rate=1000 -e tap0 --router-ip 10.11.0.1
 
 

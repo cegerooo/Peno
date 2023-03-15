@@ -28,3 +28,7 @@ gpg2john creds.priv > creds4john
 
 # bruteforce the jwt secret key
 john jwt.txt --wordlist=rockyou.txt
+
+
+#john with windows hashes
+john --wordlist=/usr/share/wordlists/rockyou.txt hash --format=NT 

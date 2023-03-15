@@ -4,3 +4,8 @@
 forfiles /P C:\Windows /S /M notepad.exe /c "cmd /c echo @PATH"  
 #Activate RDP
 reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+
+
+#Search for files
+where /r C:\  fodhelper.exe
+

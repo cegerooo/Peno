@@ -1,11 +1,25 @@
 #!/usr/bin/peno
 
-host -t mx megacorpone.com
-host -t txt megacorpone.com
+#Using host to find the A host record for www.megacorpone.com
 host www.megacorpone.com
 
-//Zone Transfer
+#Using host to find the MX and TXT records for megacorpone.com
+host -t mx megacorpone.com
+host -t txt megacorpone.com
+
+#Using Bash to brute force forward DNS name lookups
+for ip in $(cat list.txt); do host $ip.megacorpone.com; done
+
+#Using Bash to brute force reverse DNS names
+for ip in $(seq  50 100); do host 38.100.193.$ip; done | grep -v "not found"
+
+#DNS Zone Transfers
+# Using host to perform a DNS zone transfer
 host -l <domain name> <dns server address>
-host -l megacorpone.com ns1.megacorpone.com
+host -l megacorpone.com ns2.megacorpone.com
+
+#Using host to obtain DNS servers for a given domain name
+host -t ns megacorpone.com | cut -d " " -f 4
+
 
 
