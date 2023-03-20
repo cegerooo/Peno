@@ -29,4 +29,9 @@ nmap 10.11.1.220 --script=smb-os-discovery
 #Using nmap to perform a DNS zone transfer
 nmap --script=dns-zone-transfer -p 53 ns2.megacorpone.com
 
+#The Nmap script database
+cd /usr/share/nmap/scripts/
+head -n 5 script.db
+cat script.db  | grep '"vuln"\|"exploit"'
+
 

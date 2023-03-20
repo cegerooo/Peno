@@ -30,3 +30,5 @@ sudo tcpdump -A -n 'tcp[13] = 24' -r password_cracking_filtered.pcap
 
 tcpdump -i lo -A
 
+#sniff everything and save
+sudo tcpdump -i any -w os.pcap

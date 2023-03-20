@@ -1,0 +1,7 @@
+#!/usr/bin/peno
+
+
+PS C:\Users\alice\Desktop> Import-Module .\PowerUp.ps1
+Import-Module .\PowerUp.ps1
+PS C:\Users\alice\Desktop> Invoke-AllChecks
+

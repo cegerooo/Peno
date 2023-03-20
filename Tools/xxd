@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+#Xdumping with spliting one bye one column
+xxd -g 1 file

@@ -1,0 +1,5 @@
+#!/usr/bin/peno
+
+#Uploading File with Filename myFile
+curl -F myFile=@test.jpg http://192.168.208.183/exiftest.php
+

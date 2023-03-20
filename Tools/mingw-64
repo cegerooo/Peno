@@ -6,3 +6,6 @@ sudo apt install mingw-w64
 #Successfully compiling the code after adjusting the mingw-64 command to link the winsock library
 i686-w64-mingw32-gcc 42341.c -o syncbreeze_exploit.exe -lws2_32
 
+#Successfully compiling the code after adjusting the mingw-64 command to link the winsock library
+i686-w64-mingw32-gcc 42341.c -o syncbreeze_exploit.exe -lws2_32
+

