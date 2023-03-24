@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+#Authenticate and abuse this management functionality from webdav
+cadaver http://muddy.ugc/webdav/

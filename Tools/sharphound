@@ -1,0 +1,4 @@
+#!/usr/bin/peno
+
+
+ .\SharpHound.exe -c all

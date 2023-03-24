@@ -34,4 +34,6 @@ cd /usr/share/nmap/scripts/
 head -n 5 script.db
 cat script.db  | grep '"vuln"\|"exploit"'
 
+#Scan with vuln Category
+nmap -script=smb-vuln\* 192.168.182.40
 

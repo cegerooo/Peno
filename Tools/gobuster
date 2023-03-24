@@ -6,3 +6,5 @@ gobuster dir -u https://10.11.1.237/ -w /usr/share/wordlists/dirbuster/directory
 #Authenticated Search
 gobuster dir -U admin -P admin -w /usr/share/wordlists/dirb/common.txt -u http://192.168.120.73/svn
 
+#Bruteforce Extenions
+gobuster dir -u 192.168.1.33 -x php,html,zip -t 130 -w ~/wordlists/big.txt

