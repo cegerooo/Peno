@@ -256,3 +256,8 @@ C:\Windows\system32>whoami
 whoami
 slort\administrator
 
+#PrivescCheck
+PS: C:\xampp\htdocs\tmp> Import-Module .\PrivescCheck.ps1
+
+PS: C:\xampp\htdocs\tmp> Invoke-PrivescCheck -Extended
+

