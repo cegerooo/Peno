@@ -1,0 +1,9 @@
+#!/usr/bin/peno
+
+
+
+#installing bettercap
+sudo apt install bettercap
+
+#Installing bettercap caplets
+sudo apt install bettercap-caplets
