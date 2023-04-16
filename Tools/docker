@@ -1,0 +1,42 @@
+#!/usr/bin/peno
+
+#Docker Help Page
+docker --help
+
+#Help Page for docker container run
+docker container run --help
+
+# Starting the CentOS container
+docker container run --interactive --tty --rm centos:7 /bin/bash
+
+#Running CentOS 5
+docker run -it --rm centos:5 bash
+docker run -it --rm ubuntu bash
+
+#Mapping 8080 on Host to 80 on Container
+#Running a httpd Container
+#Since we don't need to interact with Apache, we'll remove the -it option, replacing it with -d (or --detach) to run the container in the background.
+docker container run -d --rm -p 8080:80 httpd
+curl localhost:8080
+
+#Listing Docker Containers
+docker container ls
+
+#Executing /bin/bash in Docker container
+docker exec -it 899 /bin/bash
+echo $$ --> Output: 119
+
+#Stopping the Container
+docker container stop 899
+
+#Mounting Host Directory to Container
+docker container run -d --rm -p 8080:80 -v /home/student/webroot/:/usr/local/apache2/htdocs/ httpd
+curl localhost:8080
+
+#Starting a Container with Host Networking
+#The --network host argument instructs Docker to start the container on the same network as the host
+#This means that we don't have to map port 80 to 8080; instead, the httpd container will automatically open port 80 on the host.
+docker container run -d --rm --network host -v /home/student/webroot/:/usr/local/apache2/htdocs/ httpd
+curl localhost
+
+
