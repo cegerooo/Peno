@@ -4,7 +4,6 @@
 #Brute force cracking using John the Ripper
 john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt --format=NT
 
-
 #Creating mutation rule in John the Ripper configuration file
 sudo nano /etc/john/john.conf
  # Add two numbers to the end of each password ([List.Rules:Wordlist])
@@ -32,3 +31,16 @@ john jwt.txt --wordlist=rockyou.txt
 
 #john with windows hashes
 john --wordlist=/usr/share/wordlists/rockyou.txt hash --format=NT 
+
+#Listing all lines containing "password"
+grep -i password /usr/share/john/password.lst
+
+#Adding two mangling rules to JtR
+sudo nano /etc/john/john.conf
+--> Add two-three numbers to the end of each password
+
+$[0-9]$[0-9]
+$[0-9]$[0-9]$[0-9]
+
+#Testing mangling rules with JtR
+john --wordlist=/usr/share/john/password.lst --rules --stdout | grep -i Password123

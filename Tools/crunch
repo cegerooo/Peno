@@ -1,6 +1,6 @@
 #!/usr/bin/peno
 
-
+#Generating Wordlist
 crunch 8 8 -t ,@@^^%%%
 #@	Lower case alpha characters
 #,	Upper case alpha characters
@@ -10,5 +10,29 @@ crunch 8 8 -t ,@@^^%%%
 crunch 4 6 0123456789ABCDEF -o crunch.txt
 #Generating password list of lower and upper case letters
 crunch 4 6 -f /usr/share/crunch/charset.lst mixalpha -o crunch.txt
-
 crunch 11 11  -f /usr/share/crunch/charset.lst lalpha -t  buddy%%%%^^ -o buddy.txt
+
+#Using Crunch to generate wordlist with the charset abc123 with word between 8 and 9 characters
+crunch 8 9 abc123
+
+#Using Crunch to generate wordlist with starting with password and ending with three digits
+crunch 11 11 -t password%%%
+ 
+#Using Crunch to generate wordlist starting with 'password' and ending with three digits - Alternate version
+crunch 11 11 0123456789 -t password@@@
+
+#Using Crunch to generate wordlist using characters in 'abcde12345' without repeating any of them
+#The -p option generates unique words from a character set or a set of whole words. Although we still need to provide the minimum and maximum length, those >
+crunch 1 1 -p abcde12345
+ 
+#Using Crunch to generate wordlist with multiple words instead of characters, without repeating them
+crunch 1 1 -p dog cat bird
+
+#Using Crunch to generate wordlist with multiple words instead of characters, without repeating them and adding two digits
+crunch 5 5 -t ddd%% -p dog cat bird
+
+#Using Crunch to generate a non-repeating wordlist from multiple words and adding two characters from a defined character set
+crunch 5 5 aADE -t ddd@@ -p dog cat bird
+
+#Combining Crunch mangling and piping it to aircrack-ng
+crunch 11 11 -t password%%% | aircrack-ng -e wifu crunch-01.cap -w -

