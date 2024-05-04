@@ -8,3 +8,6 @@ gobuster dir -U admin -P admin -w /usr/share/wordlists/dirb/common.txt -u http:/
 
 #Bruteforce Extenions
 gobuster dir -u 192.168.1.33 -x php,html,zip -t 130 -w ~/wordlists/big.txt
+
+#Bruteforce subdomains
+gobuster dns -d Domain.htb -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-5000.txt
