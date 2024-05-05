@@ -78,3 +78,6 @@ smb: \> put nc.exe
 putting file nc.exe as \nc.exe (19332.7 kb/s) (average 19333.3 kb/s)
 smb: \> exit
 
+
+#Other situations
+smbclient -L 10.129.254.45 -U administrator
