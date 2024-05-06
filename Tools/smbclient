@@ -81,3 +81,4 @@ smb: \> exit
 
 #Other situations
 smbclient -L 10.129.254.45 -U administrator
+smbclient   \\\\10.129.255.88\\backups
