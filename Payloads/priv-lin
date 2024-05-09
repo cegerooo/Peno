@@ -1,5 +1,8 @@
 #!/usr/bin/peno
 
+#useful links
+https://gtfobins.github.io/gtfobins/find/
+
 # Getting the version of the running operating system and architecture
 cat /etc/issue
 cat /etc/*-release
