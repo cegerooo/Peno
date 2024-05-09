@@ -37,3 +37,5 @@ cat script.db  | grep '"vuln"\|"exploit"'
 #Scan with vuln Category
 nmap -script=smb-vuln\* 192.168.182.40
 
+#UDP scan. Showing only open ports
+nmap -T5 -sV  -sU -vvv --open  10.129.27.254
