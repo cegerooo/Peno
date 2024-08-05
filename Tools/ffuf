@@ -15,3 +15,15 @@ ffuf -c -w /usr/share/seclists/Discovery/Web-Content/quickhits.txt -u http://192
 
 #Recursive fuzzing
 ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -ic -v -u http://IP:PORT/FUZZ -e .html -recursion 
+
+#Other options
+# -rate: You can control the rate at which ffuf sends requests per second, preventing the server from being overloaded.
+# -timeout: This option sets the timeout for individual requests, helping to prevent the fuzzer from hanging on unresponsive targets.
+
+ffuf -w /usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt -ic -u http://IP:PORT/FUZZ -e .html -recursion -recursion-depth 2 -rate 500
+
+
+#Fuzzing Post Parameter
+ffuf -u http://IP:PORT/post.php -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "y=FUZZ" -w /usr/share/seclists/Discovery/Web-Content/common.txt -mc 200 -v
+
+
