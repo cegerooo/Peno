@@ -1,5 +1,0 @@
-#!/usr/bin/peno
-
-#executing the script  to identify any potential weaknesses on the target.
-PS: C:\xampp\htdocs\tmp> Import-Module .\PrivescCheck.ps1
-PS: C:\xampp\htdocs\tmp> Invoke-PrivescCheck -Extended
