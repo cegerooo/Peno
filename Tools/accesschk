@@ -1,4 +1,0 @@
-#!/usr/bin/peno
-
-# Looking for vulnerable services we can exploit
-accesschk.exe /accepteula -uwcqv "Authenticated Users" *
