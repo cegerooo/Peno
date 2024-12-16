@@ -1,5 +1,0 @@
-#!/usr/bin/peno
-
-#Setting Proxy for the Termnial
-export https_proxy="http://int-proxy.eurodata.de:3128"
-export http_proxy="http://int-proxy.eurodata.de:3128"
