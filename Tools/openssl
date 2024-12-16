@@ -1,5 +1,0 @@
-#!/usr/bin/peno
-
-
-#generate user password(/etc/passwd)
-openssl passwd -1 -salt test pass123
