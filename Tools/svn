@@ -1,8 +1,0 @@
-#!/usr/bin/peno
-
-#checking the logs
-svn log --username admin --password admin http://192.168.120.73/svn/dev/
-
-#compare the current revision to the first and second one
-svn diff -r 3:1 --username admin --password admin http://192.168.120.73/svn/dev/
-svn diff -r 3:2 --username admin --password admin http://192.168.120.73/svn/dev/
