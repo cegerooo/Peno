@@ -1,8 +1,0 @@
-reg query hkcu\software\microsoft\windows\currentversion\runonce		//Using reg query on Run and RunOnce keys
-reg query hkcu\software\microsoft\windows\currentversion\run 			//Using reg query on Run and RunOnce keys
-reg delete hkcu\software\microsoft\windows\currentversion\run /va		//Using reg delete
-reg query hkcu\software\microsoft\windows\currentversion\run			//Using reg delete
-reg add hkcu\software\microsoft\windows\currentversion\run /v OneDrive /t REG_SZ /d "C:\Users\Offsec\AppData\Local\Microsoft\OneDrive\OneDrive.exe"		//Using reg add
-reg query hkcu\software\microsoft\windows\currentversion\run
-reg export hkcu\environment environment						//Using reg export
-
