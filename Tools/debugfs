@@ -1,6 +1,0 @@
-#!/usr/bin/peno
-
-#Using debugfs to read the files in the partition.
-$ debugfs /dev/sda5
-debugfs:  cd /root/.ssh
-debugfs:  cat id_rsa
