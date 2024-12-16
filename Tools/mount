@@ -1,7 +1,0 @@
-#!/usr/bin/peno
-
-mount -t ext4
-sudo mount /dev/sdb1 /mnt/usb
-sudo umount /mnt/usb
-sudo mount -o nolock 10.11.1.72:/home ~/home/
-
