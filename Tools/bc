@@ -1,3 +1,0 @@
-echo "ibase=2;11111"| bc
-echo "obase=2;7"| bc
-
