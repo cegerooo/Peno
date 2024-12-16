@@ -1,3 +1,0 @@
-ip a
-ip route add 10.13.37.0/24 dev eth1					//route
-
