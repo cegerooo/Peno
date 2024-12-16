@@ -1,5 +1,0 @@
-#!/usr/bin/peno
-
-#Running theHarvester on megacorpone.com
-theharvester -d megacorpone.com -b google
-
