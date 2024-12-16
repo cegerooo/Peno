@@ -1,7 +1,0 @@
-#!/usr/bin/peno
-
-#Installation BloodHound
-apt-get install bloodhound
-
-#Configuring BloodHound
-neo4j console
