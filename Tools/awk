@@ -1,9 +1,0 @@
-#!/usr/bin/peno
-
-#Simple example:
-echo "hello::there::friend" | awk -F "::" '{print $1, $3}'
-
-
-#Using awk with a unique delimiter search
-grep "href=" index.html | grep "\.megacorpone" | grep -v "www\.megacorpone\.com" | awk -F "http://" '{print $2}'
-
