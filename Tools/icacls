@@ -1,4 +1,0 @@
-icacls Music						//Using icacls on the Music directory
-icacls Music /grant Susan:(OI)(CI)(F)			//Using icacls to grant permissions
-icacls Music /t /c					// t option to check that the assigned permissions have been propagated to children of the directory
-
