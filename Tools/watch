@@ -1,6 +1,0 @@
-#!/usr/bin/peno
-
-
-#Run the watch command in a terminal(git status checking after update)
-# -n option: every second, -d option: highlights the differences between the previous and the current output
-watch -n 1 -d "find . -! -path './hooks/*' -! -path './info/*' | sort"
