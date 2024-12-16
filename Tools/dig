@@ -1,3 +1,0 @@
-dig -t mx kali.org
-dig @8.8.8.8 kali.org
-
