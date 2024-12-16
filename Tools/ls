@@ -1,6 +1,0 @@
-ls | sort
-ls -laht
-
-#showing the last modified file
-ls -l --sort=time
-
