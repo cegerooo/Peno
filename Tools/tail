@@ -1,7 +1,0 @@
-#!/usr/bin/peno
-
-#Using tail and watch for Monitoring
-sudo tail -f /var/log/apache2/access.log
-
-#Using tail and watch for Monitoring
-watch -n 5 w
