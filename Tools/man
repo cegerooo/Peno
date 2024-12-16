@@ -1,4 +1,0 @@
-man passwd
-man -k passwd
-man -k '^passwd$'
-man 5 passwd
