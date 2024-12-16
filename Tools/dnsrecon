@@ -1,8 +1,0 @@
-#!/usr/bin/peno
-
-# Using dnsrecon to perform a zone transfer
-dnsrecon -d megacorpone.com -t axfr
-
-# Brute forcing hostnames using dnsrecon
-dnsrecon -d megacorpone.com -D ~/list.txt -t brt
-
