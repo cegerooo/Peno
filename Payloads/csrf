@@ -1,7 +1,0 @@
-//Steps
-//CSRF where token validation depends on request method
-//CSRF where token is not tied to user session
-//CSRF where token is tied to non-session cookie
-//CSRF - ADDING Referer Header to bypass header Policy
-//CSRF where token is duplicated in cookie
-<meta name="referrer" content="no-referrer">
